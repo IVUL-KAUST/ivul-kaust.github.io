@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    crossorigin="anonymous"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+    integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
+    crossorigin="anonymous"></script>
+  <style>
+    .paper-item img {
+      width: 25%;
+    }
+
+    /* hide the thumbnail in small screens */
+    @media screen and (max-width:768px) {
+      .paper-item img {
+        display: none;
+      }
+    }
+  </style>
+  <script src="biblib.js"></script>
+</head>
+
+<body>
+  <!-- Papers -->
+  <div class="container">
+    <div class="row">
+      <div class='col'>
+        <ul id="paperList" class="list-unstyled"></ul>
+      </div>
+    </div>
+  </div>
+  <!-- Abstract modal -->
+  <div class="modal fade" id="paperAbstract" tabindex="-1" role="dialog" aria-labelledby="paperAbstractTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="paperAbstractTitle" class="modal-title"></h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div id="paperAbstractBody" class="modal-body"></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Citation modal -->
+  <div class="modal fade" id="paperBibTex" tabindex="-1" role="dialog" aria-labelledby="paperBibTexTitle"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="paperBibTexTitle">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <pre><code id="paperBibTexBody"></code></pre>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // const full_venue = { 
+    //     'CVPR': 'IEEE Conference on Computer Vision and Pattern Recognition',
+    // };
+    // const biblib = {
+    //   Muller_2019_CVPRW_LACFN: {
+    //     title: "Learning a Controller Fusion Network",
+    //     authors: ["Matthias Muller*", "Guohao Li*", "Bernard Ghanem"],
+    //     venue: "CVPRW",
+    //     theme: 3,
+    //     distinctions: ["Oral", "Best Paper Award"],
+    //     abstract: "Example.",
+    //     year: 2019,
+    //     thumbnail: "https://drive.google.com/a/example.com/thumbnail?id={ImageId}",
+    //     links: {
+    //       paper: "https://drive.google.com/a/example.com/file/d/{FileId}/view?usp=drivesdk",
+    //       code: "https://github.com/example/{RepoName}",
+    //     },
+    //   },
+    // };
+    const buttons = {
+      paper: "success",
+      code: "dark",
+      data: "dark",
+      supplementary: "danger",
+      video: "danger",
+      poster: "danger",
+      slides: "danger",
+      website: "info",
+    };
+    function getDriveURL(drive_url) {
+      if (drive_url.includes("/")) {
+        return drive_url;
+      }
+      return "https://drive.google.com/a/kaust.edu.sa/file/d/" + drive_url + "/view?usp=drivesdk";
+    }
+    function getImageURL(image_url) {
+      if (image_url.includes("/")) {
+        return image_url;
+      } else if (!image_url) {
+        image_url = "1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w";  // placeholder
+      }
+      return "https://drive.google.com/a/kaust.edu.sa/thumbnail?id=" + image_url;
+    }
+    function replacePaperAbstract(bibkey) {
+      const bibitem = biblib[bibkey];
+      const paper_abstract_title = document.getElementById("paperAbstractTitle");
+      const paper_abstract_body = document.getElementById("paperAbstractBody");
+      paper_abstract_title.innerText = bibitem.title;
+      paper_abstract_body.innerText = bibitem.abstract;
+    }
+    function replacePaperBibTex(bibkey) {
+      const bibitem = biblib[bibkey];
+      const bibtex = "@paper{" + bibkey + ",\n" +
+        "  author = {" + bibitem.authors.join(" and ") + "},\n" +
+        "  title = {" + bibitem.title + "},\n" +
+        "  conference = {" + full_venue[bibitem.venue] + "},\n" +
+        "  year = {" + bibitem.year + "},\n" +
+        "}";
+      const paper_bibtex_title = document.getElementById("paperBibTexTitle");
+      const paper_bibtex_body = document.getElementById("paperBibTexBody");
+      paper_bibtex_title.innerText = bibitem.title;
+      paper_bibtex_body.innerText = bibtex;
+    }
+    function createButton(text, style = "dark", link = null) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "btn btn-" + style + " btn-sm m-1";
+      button.innerText = text;
+      if (link) {
+        const anchor = document.createElement("a");
+        anchor.href = link;
+        anchor.append(button);
+        return anchor;
+      }
+      return button;
+    }
+    function createItem(bibkey) {
+      const bibitem = biblib[bibkey];
+      const li = document.createElement("li");
+      li.className = "media py-1 paper-item";
+
+      // place the thumbnail
+      const img = document.createElement("img");
+      li.append(img);
+      img.src = getImageURL(bibitem.thumbnail);
+      img.alt = "KAUST CEMSE IVUL EE CS STAT " + bibitem.title;
+      img.className = "align-self-center mr-0";
+
+      const media_body = document.createElement("div");
+      li.append(media_body);
+      media_body.className = "media-body card";
+
+      // generate the card body:
+      // - title
+      // - authors list
+      // - [theme] <venue> <year> [distinctions]
+      const card_body = document.createElement("div");
+      media_body.append(card_body);
+      card_body.className = "card-body";
+      const card_title = document.createElement("h5");
+      card_body.append(card_title);
+      card_title.className = "card-title";
+      card_title.innerText = bibitem.title;
+      const card_subtitle = document.createElement("h6");
+      card_body.append(card_subtitle);
+      card_subtitle.className = "card-subtitle mb-2 text-muted";
+      card_subtitle.innerText = bibitem.authors.join(", ");  //TODO
+      const card_text = document.createElement("p");
+      card_body.append(card_text);
+      card_text.className = "card-text";
+      const theme_button = createButton(
+        "Theme " + bibitem.theme,
+        "secondary",
+        "#",
+      ); // TODO
+      card_text.append(theme_button);
+      const venue = document.createElement("i");
+      card_text.append(venue);
+      venue.innerText = " Published in " + bibitem.venue + " " + bibitem.year + " ";
+      if (bibitem.distinctions.length) {
+        const distinctions = document.createElement("b");
+        card_text.append(distinctions);
+        distinctions.innerText = "[" + bibitem.distinctions.join("] [") + "]";
+      }
+
+      // generate the footer with all the buttons
+      const card_footer = document.createElement("div");
+      media_body.append(card_footer);
+      card_footer.className = "card-footer";
+      const abstract = createButton("Abstract", "outline-primary");
+      abstract.setAttribute("data-toggle", "modal");
+      abstract.setAttribute("data-target", "#paperAbstract");
+      abstract.setAttribute("onclick", "replacePaperAbstract('" + bibkey + "')");
+      card_footer.append(abstract);
+      for (let key in buttons) {
+        if (bibitem.links[key]) {
+          const name = key.charAt(0).toUpperCase() + key.slice(1);
+          const link = getDriveURL(bibitem.links[key]);
+          const button = createButton(name, "outline-" + buttons[key], link);
+          button.target = "_blank";
+          card_footer.append(button);
+        }
+      }
+      const cite = createButton("Cite", "outline-info");
+      cite.setAttribute("data-toggle", "modal");
+      cite.setAttribute("data-target", "#paperBibTex");
+      cite.setAttribute("onclick", "replacePaperBibTex('" + bibkey + "')");
+      card_footer.append(cite);
+
+      return li;
+    }
+  </script>
+  <script>
+    // https://www.sitepoint.com/get-url-parameters-with-javascript/
+    const params = new URLSearchParams(window.location.search);
+    const p_authors = params.getAll("author");
+    const p_themes = params.getAll("theme");
+    const p_venues = params.getAll("venue");
+    const p_years = params.getAll("year");
+
+    var filtered = [];
+    for (let bibkey in biblib) {
+      let bibitem = biblib[bibkey];
+      if (p_years.length) {
+        if (!p_years.find((p) => bibitem.year == p)) {
+          continue;
+        }
+      }
+      if (p_themes.length) {
+        if (!p_themes.find((p) => bibitem.theme == p)) {
+          continue;
+        }
+      }
+      if (p_venues.length) {
+        let venue = bibitem.venue.toLowerCase();
+        if (!p_venues.find((p) => venue === p.toLowerCase())) {
+          continue;
+        }
+      }
+      if (p_authors.length) {
+        let authors = bibitem.authors.join("|").toLowerCase();
+        if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
+          continue;
+        }
+      }
+      let sort_key = bibitem.year.toString() + bibitem.venue + bibitem.authors[0];
+      filtered.push([bibkey, sort_key]);
+    }
+    filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1);
+    const paper_list = document.getElementById("paperList");
+    for (let pair of filtered) {
+      paper_list.append(createItem(pair[0]));
+    }
+  </script>
+</body>
+
+</html>
