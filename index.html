@@ -1,17 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-    crossorigin="anonymous"></script>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-    integrity="sha384-pjaaA8dDz/5BgdFUPX6M/9SUZv4d12SUPF0axWc+VRZkx5xU3daN+lYb49+Ax+Tl"
-    crossorigin="anonymous"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+  <title>IVUL Publications</title>
   <style>
     .paper-item img {
       width: 25%;
@@ -31,7 +28,7 @@
   <!-- Papers -->
   <div class="container">
     <div class="row">
-      <div class='col'>
+      <div class="col">
         <ul id="paperList" class="list-unstyled"></ul>
       </div>
     </div>
@@ -42,12 +39,12 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 id="paperAbstractTitle" class="modal-title"></h5>
+          <h5 class="modal-title" id="paperAbstractTitle"></h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div id="paperAbstractBody" class="modal-body"></div>
+        <div class="modal-body"></div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </div>
@@ -66,7 +63,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <pre><code id="paperBibTexBody"></code></pre>
+          <pre><code></code></pre>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -74,166 +71,140 @@
       </div>
     </div>
   </div>
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
   <script>
+    "use strict";
     // const full_venue = { 
     //     'CVPR': 'IEEE Conference on Computer Vision and Pattern Recognition',
     // };
     // const biblib = {
     //   Muller_2019_CVPRW_LACFN: {
-    //     title: "Learning a Controller Fusion Network",
-    //     authors: ["Matthias Muller*", "Guohao Li*", "Bernard Ghanem"],
-    //     venue: "CVPRW",
+    //     title: 'Learning a Controller Fusion Network',
+    //     authors: ['Matthias Muller*', 'Guohao Li*', 'Bernard Ghanem'],
+    //     venue: 'CVPRW',
     //     theme: 3,
-    //     distinctions: ["Oral", "Best Paper Award"],
-    //     abstract: "Example.",
+    //     distinctions: ['Oral', 'Best Paper Award'],
+    //     abstract: 'Example.',
     //     year: 2019,
-    //     thumbnail: "https://drive.google.com/a/example.com/thumbnail?id={ImageId}",
+    //     thumbnail: '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w',  # Google Drive ID or raw URL
     //     links: {
-    //       paper: "https://drive.google.com/a/example.com/file/d/{FileId}/view?usp=drivesdk",
-    //       code: "https://github.com/example/{RepoName}",
+    //       paper: '{FileId}',  # Google Drive ID or raw URL
+    //       code: 'https://github.com/example/{RepoName}',  # Google Drive ID or raw URL
     //     },
     //   },
     // };
-    const buttons = {
-      paper: "success",
-      code: "dark",
-      data: "dark",
-      supplementary: "danger",
-      video: "danger",
-      poster: "danger",
-      slides: "danger",
-      website: "info",
-    };
-    function getDriveURL(drive_url) {
-      if (drive_url.includes("/")) {
+    $('#paperAbstract').on('show.bs.modal', function (event) {
+      const modal = $(this);
+      const bibkey = $(event.relatedTarget).data('bibkey');
+      const bibitem = biblib[bibkey];
+      modal.find('.modal-title').text(bibitem.title);
+      modal.find('.modal-body').text(bibitem.abstract);
+    });
+    $('#paperBibTex').on('show.bs.modal', function (event) {
+      const modal = $(this);
+      const bibkey = $(event.relatedTarget).data('bibkey');
+      const bibitem = biblib[bibkey];
+      const bibtex = `@paper{${bibkey},
+        author = {${bibitem.authors.join(" and ")}},
+        title = {${bibitem.title}},
+        conference = {${full_venue[bibitem.venue]}},
+        year = {${bibitem.year}},\n}`.replace(/\n +/g, '\n  ');
+      modal.find('.modal-title').text(bibitem.title);
+      modal.find('.modal-body').find('code').text(bibtex);
+    });
+    function getDriveURL(drive_url, image = false) {
+      if (drive_url.includes('/')) {
         return drive_url;
+      } else if (!drive_url) {
+        drive_url = '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w';  // placeholder IVUL logo
       }
-      return "https://drive.google.com/a/kaust.edu.sa/file/d/" + drive_url + "/view?usp=drivesdk";
+      const postfix = image ? `thumbnail?id=${drive_url}` : `file/d/${drive_url}/view?usp=drivesdk`;
+      return `https://drive.google.com/a/kaust.edu.sa/${postfix}`;
     }
-    function getImageURL(image_url) {
-      if (image_url.includes("/")) {
-        return image_url;
-      } else if (!image_url) {
-        image_url = "1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w";  // placeholder
-      }
-      return "https://drive.google.com/a/kaust.edu.sa/thumbnail?id=" + image_url;
+    function toMedia(element, image_url = '', image_alt = '') {
+      // takes an HTML element and convert it into a Bootstrap media object with a thumbnail
+      element.addClass('media py-1').append([
+        $('<img>').attr({
+          src: getDriveURL(image_url, true),
+          alt: image_alt,
+          class: 'align-self-center mr-0',
+        }),
+        $('<div>').attr('class', 'media-body'),
+      ]);
+      return element.children().last();
     }
-    function replacePaperAbstract(bibkey) {
-      const bibitem = biblib[bibkey];
-      const paper_abstract_title = document.getElementById("paperAbstractTitle");
-      const paper_abstract_body = document.getElementById("paperAbstractBody");
-      paper_abstract_title.innerText = bibitem.title;
-      paper_abstract_body.innerText = bibitem.abstract;
+    function toCard(element, title = '', subtitle = '') {
+      // takes an HTML element and convert it into a Bootstrap card with footer
+      const card_body = $('<div>').attr('class', 'card-body').append([
+        $('<h5>').attr('class', 'card-title').text(title),
+        $('<h6>').attr('class', 'card-subtitle mb-2 text-muted').text(subtitle),
+        $('<p>').attr('class', 'card-text'),
+      ]);
+      const card_footer = $('<div>').attr('class', 'card-footer');
+      element.addClass('card').append(card_body, card_footer);
+      return { body: card_body.children().last(), footer: card_footer };
     }
-    function replacePaperBibTex(bibkey) {
-      const bibitem = biblib[bibkey];
-      const bibtex = "@paper{" + bibkey + ",\n" +
-        "  author = {" + bibitem.authors.join(" and ") + "},\n" +
-        "  title = {" + bibitem.title + "},\n" +
-        "  conference = {" + full_venue[bibitem.venue] + "},\n" +
-        "  year = {" + bibitem.year + "},\n" +
-        "}";
-      const paper_bibtex_title = document.getElementById("paperBibTexTitle");
-      const paper_bibtex_body = document.getElementById("paperBibTexBody");
-      paper_bibtex_title.innerText = bibitem.title;
-      paper_bibtex_body.innerText = bibtex;
-    }
-    function createButton(text, style = "dark", link = null) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "btn btn-" + style + " btn-sm m-1";
-      button.innerText = text;
+    function createButton(text, style = 'dark', link = null, target = null) {
+      const button = $('<button>').attr({
+        type: 'button',
+        class: `btn btn-${style} btn-sm m-1`,
+      }).text(text);
       if (link) {
-        const anchor = document.createElement("a");
-        anchor.href = link;
-        anchor.append(button);
-        return anchor;
+        return $('<a>').attr({ href: link, target: target }).append(button);
       }
       return button;
     }
     function createItem(bibkey) {
       const bibitem = biblib[bibkey];
-      const li = document.createElement("li");
-      li.className = "media py-1 paper-item";
-
-      // place the thumbnail
-      const img = document.createElement("img");
-      li.append(img);
-      img.src = getImageURL(bibitem.thumbnail);
-      img.alt = "KAUST CEMSE IVUL EE CS STAT " + bibitem.title;
-      img.className = "align-self-center mr-0";
-
-      const media_body = document.createElement("div");
-      li.append(media_body);
-      media_body.className = "media-body card";
-
-      // generate the card body:
-      // - title
-      // - authors list
-      // - [theme] <venue> <year> [distinctions]
-      const card_body = document.createElement("div");
-      media_body.append(card_body);
-      card_body.className = "card-body";
-      const card_title = document.createElement("h5");
-      card_body.append(card_title);
-      card_title.className = "card-title";
-      card_title.innerText = bibitem.title;
-      const card_subtitle = document.createElement("h6");
-      card_body.append(card_subtitle);
-      card_subtitle.className = "card-subtitle mb-2 text-muted";
-      card_subtitle.innerText = bibitem.authors.join(", ");  //TODO
-      const card_text = document.createElement("p");
-      card_body.append(card_text);
-      card_text.className = "card-text";
-      const theme_button = createButton(
-        "Theme " + bibitem.theme,
-        "secondary",
-        "#",
-      ); // TODO
-      card_text.append(theme_button);
-      const venue = document.createElement("i");
-      card_text.append(venue);
-      venue.innerText = " Published in " + bibitem.venue + " " + bibitem.year + " ";
-      if (bibitem.distinctions.length) {
-        const distinctions = document.createElement("b");
-        card_text.append(distinctions);
-        distinctions.innerText = "[" + bibitem.distinctions.join("] [") + "]";
-      }
-
-      // generate the footer with all the buttons
-      const card_footer = document.createElement("div");
-      media_body.append(card_footer);
-      card_footer.className = "card-footer";
-      const abstract = createButton("Abstract", "outline-primary");
-      abstract.setAttribute("data-toggle", "modal");
-      abstract.setAttribute("data-target", "#paperAbstract");
-      abstract.setAttribute("onclick", "replacePaperAbstract('" + bibkey + "')");
-      card_footer.append(abstract);
-      for (let key in buttons) {
-        if (bibitem.links[key]) {
-          const name = key.charAt(0).toUpperCase() + key.slice(1);
-          const link = getDriveURL(bibitem.links[key]);
-          const button = createButton(name, "outline-" + buttons[key], link);
-          button.target = "_blank";
-          card_footer.append(button);
+      const authors = bibitem.authors.join(', ');
+      const distinctions = bibitem.distinctions.length ?
+        ('[' + bibitem.distinctions.join('] [') + ']') : '';
+      const li = $('<li>').attr('class', 'paper-item');
+      const media = toMedia(li, bibitem.thumbnail, bibitem.title);
+      const card = toCard(media, bibitem.title, authors);
+      card.body.append([
+        createButton(`Theme ${bibitem.theme}`, 'secondary'),
+        $('<i>').text(` Published in ${bibitem.venue} ${bibitem.year} `),
+        $('<b>').text(distinctions),
+      ]);
+      card.footer.append(createButton('Abstract', 'outline-primary').attr({
+        'data-toggle': 'modal',
+        'data-target': '#paperAbstract',
+        'data-bibkey': bibkey,
+      }));
+      card.footer.append(createButton('Paper', `outline-success`, getDriveURL(bibitem.links['paper']), '_blank'));
+      for (let key in bibitem.links) {
+        if (key === 'paper') {
+          continue;
         }
+        const link = getDriveURL(bibitem.links[key]);
+        const button = createButton(key, `outline-dark`, link, '_blank');
+        card.footer.append(button);
       }
-      const cite = createButton("Cite", "outline-info");
-      cite.setAttribute("data-toggle", "modal");
-      cite.setAttribute("data-target", "#paperBibTex");
-      cite.setAttribute("onclick", "replacePaperBibTex('" + bibkey + "')");
-      card_footer.append(cite);
-
+      card.footer.append(createButton('Cite', 'outline-danger').attr({
+        'data-toggle': 'modal',
+        'data-target': '#paperBibTex',
+        'data-bibkey': bibkey,
+      }));
       return li;
     }
   </script>
   <script>
     // https://www.sitepoint.com/get-url-parameters-with-javascript/
     const params = new URLSearchParams(window.location.search);
-    const p_authors = params.getAll("author");
-    const p_themes = params.getAll("theme");
-    const p_venues = params.getAll("venue");
-    const p_years = params.getAll("year");
+    const p_authors = params.getAll('author');
+    const p_themes = params.getAll('theme');
+    const p_venues = params.getAll('venue');
+    const p_years = params.getAll('year');
 
     var filtered = [];
     for (let bibkey in biblib) {
@@ -255,7 +226,7 @@
         }
       }
       if (p_authors.length) {
-        let authors = bibitem.authors.join("|").toLowerCase();
+        let authors = bibitem.authors.join('|').toLowerCase();
         if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
           continue;
         }
@@ -264,7 +235,7 @@
       filtered.push([bibkey, sort_key]);
     }
     filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1);
-    const paper_list = document.getElementById("paperList");
+    const paper_list = $('#paperList');
     for (let pair of filtered) {
       paper_list.append(createItem(pair[0]));
     }
