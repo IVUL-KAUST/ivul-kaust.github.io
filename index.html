@@ -21,6 +21,99 @@
       }
     }
   </style>
+  <script type="text/javascript" src="publib.js"></script>
+  <script>
+    "use strict";
+    const full_venue = {};
+    // const full_venue = { 
+    //     'CVPR': 'IEEE Conference on Computer Vision and Pattern Recognition',
+    // };
+    const biblib = {};
+    // const biblib = {
+    //   Muller_2019_CVPRW_LACFN: {
+    //     title: 'Learning a Controller Fusion Network',
+    //     authors: ['Matthias Muller*', 'Guohao Li*', 'Bernard Ghanem'],
+    //     venue: 'CVPRW',
+    //     theme: 3,
+    //     distinctions: ['Oral', 'Best Paper Award'],
+    //     abstract: 'Example.',
+    //     year: 2019,
+    //     thumbnail: '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w',  # Google Drive ID or raw URL
+    //     links: {
+    //       paper: '{FileId}',  # Google Drive ID or raw URL
+    //       code: 'https://github.com/example/{RepoName}',  # Google Drive ID or raw URL
+    //     },
+    //   },
+    // };
+    for (let i in publib.venue) {
+      full_venue[publib.venue[i]] = publib.full_venue[i];
+    }
+    for (let pub of publib.lib) {
+      const bibitem = {};
+      bibitem.links = {};
+      let authors, coauthors;
+      for (let i in publib.keys) {
+        const key = publib.keys[i];
+        const value = pub[i];
+        switch (key) {
+          case 'handle':
+            if (value) {
+              bibitem.links['Repo'] = `http://hdl.handle.net/${value}`;
+            }
+            break;
+          case 'authors':
+            authors = value;
+            break;
+          case 'coauthors':
+            coauthors = value;
+            break;
+          case 'year':
+            bibitem.year = 2000 + value;
+            break;
+          case 'venue':
+            bibitem.venue = publib.venue[value];
+            break;
+          case 'paper':
+            bibitem.links.paper = value;
+            break;
+          case 'distinctions':
+            bibitem.distinctions = [];
+            for (let i of value) {
+              bibitem.distinctions.push(publib.distinction[i]);
+            }
+            break;
+          case 'links':
+            for (let i in value) {
+              if (value[i] != 0) {
+                bibitem.links[publib.link[i]] = value[i];
+              }
+            }
+            break;
+          case 'theme':
+          case 'title':
+          case 'abstract':
+          case 'thumbnail':
+            bibitem[key] = value;
+            break;
+          default:
+            console.log(key);
+        }
+      }
+      bibitem.authors = [];
+      for (let i in authors) {
+        bibitem.authors.push(publib.author[authors[i]] + publib.coauthor[coauthors[i]]);
+      }
+      const last_name = publib.author[authors[0]].split(' ')[1];
+      let key = `${bibitem.year}_${bibitem.venue}_${last_name}`;
+      for (let i = 1; i <= 100; i++) {
+        if (!biblib[`${key}_${i}`]) {
+          key = `${key}_${i}`;
+          break;
+        }
+      }
+      biblib[key] = bibitem;
+    }
+  </script>
 </head>
 
 <body>
@@ -81,28 +174,6 @@
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
   <script>
-    "use strict";
-    const full_venue = {};
-    // const full_venue = { 
-    //     'CVPR': 'IEEE Conference on Computer Vision and Pattern Recognition',
-    // };
-    const biblib = {};
-    // const biblib = {
-    //   Muller_2019_CVPRW_LACFN: {
-    //     title: 'Learning a Controller Fusion Network',
-    //     authors: ['Matthias Muller*', 'Guohao Li*', 'Bernard Ghanem'],
-    //     venue: 'CVPRW',
-    //     theme: 3,
-    //     distinctions: ['Oral', 'Best Paper Award'],
-    //     abstract: 'Example.',
-    //     year: 2019,
-    //     thumbnail: '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w',  # Google Drive ID or raw URL
-    //     links: {
-    //       paper: '{FileId}',  # Google Drive ID or raw URL
-    //       code: 'https://github.com/example/{RepoName}',  # Google Drive ID or raw URL
-    //     },
-    //   },
-    // };
     $('#paperAbstract').on('show.bs.modal', function (event) {
       const modal = $(this);
       const bibkey = $(event.relatedTarget).data('bibkey');
@@ -201,129 +272,48 @@
       }));
       return li;
     }
-    function loadJSON(url, func) {
-      const xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          func(JSON.parse(this.responseText));
-        }
-      };
-      xmlhttp.open('GET', url, true);
-      xmlhttp.send();
-    }
   </script>
   <script>
-    loadJSON('publib.json', function (publib) {
-      for (let i in publib.venue) {
-        full_venue[publib.venue[i]] = publib.full_venue[i];
-      }
-      for (let pub of publib.lib) {
-        const bibitem = {};
-        bibitem.links = {};
-        let authors, coauthors;
-        for (let i in publib.keys) {
-          const key = publib.keys[i];
-          const value = pub[i];
-          switch (key) {
-            case 'handle':
-              if (value) {
-                bibitem.links['Repo'] = `http://hdl.handle.net/${value}`;
-              }
-              break;
-            case 'authors':
-              authors = value;
-              break;
-            case 'coauthors':
-              coauthors = value;
-              break;
-            case 'year':
-              bibitem.year = 2000 + value;
-              break;
-            case 'venue':
-              bibitem.venue = publib.venue[value];
-              break;
-            case 'paper':
-              bibitem.links.paper = value;
-              break;
-            case 'distinctions':
-              bibitem.distinctions = [];
-              for (let i of value) {
-                bibitem.distinctions.push(publib.distinction[i]);
-              }
-              break;
-            case 'links':
-              for (let i in value) {
-                if (value[i] != 0) {
-                  bibitem.links[publib.link[i]] = value[i];
-                }
-              }
-              break;
-            case 'theme':
-            case 'title':
-            case 'abstract':
-            case 'thumbnail':
-              bibitem[key] = value;
-              break;
-            default:
-              console.log(key);
-          }
-        }
-        bibitem.authors = [];
-        for (let i in authors) {
-          bibitem.authors.push(publib.author[authors[i]] + publib.coauthor[coauthors[i]]);
-        }
-        const last_name = publib.author[authors[0]].split(' ')[1];
-        let key = `${bibitem.year}_${bibitem.venue}_${last_name}`;
-        for (let i = 1; i <= 100; i++) {
-          if (!biblib[`${key}_${i}`]) {
-            key = `${key}_${i}`;
-            break;
-          }
-        }
-        biblib[key] = bibitem;
-      }
+    // https://www.sitepoint.com/get-url-parameters-with-javascript/
+    const params = new URLSearchParams(window.location.search);
+    const p_authors = params.getAll('author');
+    const p_themes = params.getAll('theme');
+    const p_venues = params.getAll('venue');
+    const p_years = params.getAll('year');
 
-      // https://www.sitepoint.com/get-url-parameters-with-javascript/
-      const params = new URLSearchParams(window.location.search);
-      const p_authors = params.getAll('author');
-      const p_themes = params.getAll('theme');
-      const p_venues = params.getAll('venue');
-      const p_years = params.getAll('year');
-
-      var filtered = [];
-      for (let bibkey in biblib) {
-        let bibitem = biblib[bibkey];
-        if (p_years.length) {
-          if (!p_years.find((p) => bibitem.year == p)) {
-            continue;
-          }
+    var filtered = [];
+    for (let bibkey in biblib) {
+      let bibitem = biblib[bibkey];
+      if (p_years.length) {
+        if (!p_years.find((p) => bibitem.year == p)) {
+          continue;
         }
-        if (p_themes.length) {
-          if (!p_themes.find((p) => bibitem.theme == p)) {
-            continue;
-          }
-        }
-        if (p_venues.length) {
-          let venue = bibitem.venue.toLowerCase();
-          if (!p_venues.find((p) => venue === p.toLowerCase())) {
-            continue;
-          }
-        }
-        if (p_authors.length) {
-          let authors = bibitem.authors.join('|').toLowerCase();
-          if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
-            continue;
-          }
-        }
-        let sort_key = bibitem.year.toString() + bibitem.venue + bibitem.authors[0];
-        filtered.push([bibkey, sort_key]);
       }
-      filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1);
-      const paper_list = $('#paperList');
-      for (let pair of filtered) {
-        paper_list.append(createItem(pair[0]));
+      if (p_themes.length) {
+        if (!p_themes.find((p) => bibitem.theme == p)) {
+          continue;
+        }
       }
-    });
+      if (p_venues.length) {
+        let venue = bibitem.venue.toLowerCase();
+        if (!p_venues.find((p) => venue === p.toLowerCase())) {
+          continue;
+        }
+      }
+      if (p_authors.length) {
+        let authors = bibitem.authors.join('|').toLowerCase();
+        if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
+          continue;
+        }
+      }
+      let sort_key = bibitem.year.toString() + bibitem.venue + bibitem.authors[0];
+      filtered.push([bibkey, sort_key]);
+    }
+    filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1);
+    const paper_list = $('#paperList');
+    for (let pair of filtered) {
+      paper_list.append(createItem(pair[0]));
+    }
   </script>
 </body>
 
