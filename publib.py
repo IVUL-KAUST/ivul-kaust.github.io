@@ -1,0 +1,1303 @@
+class Publication:
+    AUTHORS = {
+        'bernard': 'Bernard Ghanem',
+        'ali': 'Ali Thabet',
+        'silvio': 'Silvio Giancola',
+        'adel': 'Adel Bibi',
+        'guohao': 'Guohao Li',
+        'hani': 'Hani Itani',
+        'humam': 'Humam Alwassel',
+        'jean': 'Jean Lahoud',
+        'jesus': 'Jesus Zarzar',
+        'modar': 'Modar Alfadly',
+        'frost': 'Mengmeng Xu',
+        'salman': 'Salman Alsubaihi',
+        'sara': 'Sara Shaheen',
+        'affara': 'Lama Affara',
+        'fabian': 'Fabian Caba Heilbron',
+        'victor': 'Victor Escorcia',
+        'baoyuan': 'Baoyuan Wu',
+        'ganzhao': 'Ganzhao Yuan',
+        'jiahong': 'Jia-Hong Huang',
+        'jian': 'Jian Zhang',
+        'yancheng': 'Yancheng Bai',
+        'matthias': 'Matthias Müller',
+        'yongqiang': 'Yongqiang Zhang',
+        'cuong': 'Cuong Duc Dao',
+        'gopal': 'Gopal Sharma',
+        'juan': 'Juan Carlos Niebles',
+        'rafal': 'Rafał Protasiuk',
+        'tarek': 'Tarek Dghaily',
+        'vincent': 'Vincent Casser',
+        'xin': 'Xin Yu',
+        'neil': 'Neil Smith',
+        'sally': 'Sally Sisi Qu',
+        'peter': 'Peter Wonka',
+        'dominik': 'Dominik L Michels',
+        'shyamal': 'Shyamal Buch',
+        'jens': 'Jens Schneider',
+        'aditya': 'Aditya Khosla',
+        'akshat': 'Akshat Dave',
+        'alexandre': 'Alexandre Heili',
+        'alexey': 'Alexey Dosovitskiy',
+        'alyn': 'Alyn Rockwood',
+        'basura': 'Basura Fernando',
+        'caigui': 'Caigui Jiang',
+        'changsheng': 'Changsheng Xu',
+        'chuanqi': 'Chuanqi Shen',
+        'daniel': 'Daniel Asmar',
+        'fan': 'Fan Jia',
+        'fatemeh': 'Fatemeh Shiri',
+        'fatih': 'Fatih Porikli',
+        'hailin': 'Hailin Jin',
+        'hongxun': 'Hongxun Yao',
+        'indriyati': 'Indriyati Atmosukarto',
+        'jagannadan': 'Jagannadan Varadarajan',
+        'jeanmarc': 'Jean-Marc Odobez',
+        'joon': 'Joon-Young Lee',
+        'joshua': 'Joshua Peterson',
+        'karthik': 'Karthik Muthuswamy',
+        'li': 'Li Fei-Fei',
+        'liangliang': 'Liangliang Nan',
+        'marcfarra': 'Marc Farra',
+        'marc': 'Marc Pollefeys',
+        'martin': 'Martin R Oswald',
+        'maya': 'Maya Kreidieh',
+        'ming': 'Ming-Hsuan Yang',
+        'mingli': 'Mingli Ding',
+        'hachama': 'Mohammed Hachama',
+        'mohieddine': 'Mohieddine Amine',
+        'narendra': 'Narendra Ahuja',
+        'peng': 'Peng Sun',
+        'qiang': 'Qiang Ji',
+        'rachit': 'Rachit Dubey',
+        'rene': 'René Ranftl',
+        'richard': 'Richard Hartley',
+        'shaunak': 'Shaunak Ahuja',
+        'shuicheng': 'Shuicheng Yan',
+        'si': 'Si Liu',
+        'siwei': 'Siwei Lyu',
+        'tianzhu': 'Tianzhu Zhang',
+        'vladlen': 'Vladlen Koltun',
+        'wayner': 'Wayner Barrios',
+        'wei': 'Wei Liu',
+        'weishi': 'Wei-Shi Zheng',
+        'weidong': 'Weidong Chen',
+        'yongping': 'Yongping Zhao',
+        'yongqiangli': 'Yongqiang Li',
+        'yuanhao': 'Yuanhao Cao',
+        'zhenjie': 'Zhenjie Zhang',
+        'zhifeng': 'Zhifeng Hao',
+    }
+    VENUES = {
+        'TPAMI':
+            'IEEE Transactions on Pattern Analysis and Machine Intelligence',
+        'IJCV':
+            'International Journal of Computer Vision',
+        'CVPR':
+            'IEEE Conference on Computer Vision and Pattern Recognition',
+        'CVPRW':
+            'IEEE Conference on Computer Vision and Pattern Recognition Workshops',
+        'ICCV':
+            'IEEE International Conference on Computer Vision',
+        'ICCVW':
+            'IEEE International Conference on Computer Vision Workshops',
+        'ECCV':
+            'IEEE European Conference on Computer Vision',
+        'ECCVW':
+            'IEEE European Conference on Computer Vision Workshops',
+        'ICLR':
+            'International Conference on Learning Representations',
+        'AAAI':
+            'Association for the Advancement of Artificial Intelligence',
+        'ACCV':
+            'Asian Conference on Computer Vision',
+        'WACV':
+            'IEEE Winter Conference on Applications of Computer Vision',
+        'BMVC':
+            'British Machine Vision Conference',
+        'ICPR':
+            'International Conference on Pattern Recognition',
+        'CVIU':
+            'Computer Vision and Image Understanding',
+        'ICASSP':
+            'IEEE International Conference on Acoustics, Speech and Signal Processing',
+        'PatternRecognition':
+            'Pattern Recognition Journal',
+        'NeuroComputing':
+            'Neurocomputing Journal',
+        'EuroGraphics':
+            'EuroGraphics Computer Graphics Forum',
+        'Cybernetics':
+            'IEEE Transactions on Cybernetics',
+        'IROS':
+            'International Conference on Intelligent Robots and Systems',
+        'RSS':
+            'Robotics Science and Systems',
+        'CORL':
+            'Conference on Robot Learning',
+    }
+    COAUTHORS = ('*', '+', '×', '▪', '▴', '▾')
+    DISTINCTIONS = ('Short Paper', 'Spotlight', 'Oral', 'Best Paper Award')
+    LINKS = ('Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website')
+
+    def __init__(self,
+                 key,
+                 title,
+                 authors,
+                 distinctions,
+                 paper,
+                 links,
+                 abstract,
+                 thumbnail,
+                 handle=''):
+        self.theme, self.year, self.venue = key
+        assert self.venue in self.VENUES
+        self.title = title
+        self.abstract = abstract
+        self.authors = tuple(
+            (a,) if isinstance(a, str) else tuple(a) for a in authors)
+        assert all(a in self.AUTHORS for t in self.authors for a in t)
+        self.distinctions = tuple(distinctions)
+        assert all(d in self.DISTINCTIONS for d in self.distinctions)
+        self.links = links
+        assert all(l in self.LINKS for l in self.links.keys())
+        self.paper = paper
+        self.thumbnail = thumbnail
+        self.handle = handle
+
+    def __repr__(self):
+        out = (f'{type(self).__name__}(\n'
+               f'    ({self.theme}, {self.year}, {repr(self.venue)}),\n'
+               f'    {repr(self.title)},\n'
+               f'    {self.authors},\n'
+               f'    {self.distinctions},\n'
+               f'    {repr(self.paper)},\n'
+               f'    {self.links},\n'
+               f'    {repr(self.abstract)},\n'
+               f'    {repr(self.thumbnail)},\n')
+        if self.handle:
+            out += f'    {repr(self.handle)},\n'
+        return out + ')'
+
+
+# pylint: disable=line-too-long
+PUBLIB = [
+    Publication(
+        (3, 2019, 'TPAMI'),
+        'Can We See More? Joint Frontalization and Hallucination of Unaligned Tiny Faces',
+        ('xin', 'fatemeh', 'bernard', 'fatih'),
+        (),
+        '1pTK9miOIGi9DwHyEWGs6_6AvSKJkxyV3',
+        {
+            'Website': 'https://ieeexplore.ieee.org/document/8704962',
+        },
+        "In popular TV programs (such as CSI), a very low-resolution face image of a person, who is not even looking at the camera in many cases, is digitally super-resolved to a degree that suddenly the person's identity is made visible and recognizable. Of course, we suspect that this is merely a cinematographic special effect and such a magical transformation of a single image is not technically possible. Or, is it? In this paper, we push the boundaries of super-resolving (hallucinating to be more accurate) a tiny, non-frontal face image to understand how much of this is possible by leveraging the availability of large datasets and deep networks. To this end, we introduce a novel Transformative Adversarial Neural Network (TANN) to jointly frontalize very-low resolution (i.e. $16\\times 16$ pixels) out-of-plane rotated face images (including profile views) and aggressively super-resolve them ( $8\\times$ ), regardless of their original poses and without using any 3D information. TANN is composed of two components: a transformative upsampling network which embodies encoding, spatial transformation and deconvolutional layers, and a discriminative network that enforces the generated high-resolution frontal faces to lie on the same manifold as real frontal face images. We evaluate our method on a large set of synthesized non-frontal face images to assess its reconstruction performance. Extensive experiments demonstrate that TANN generates both qualitatively and quantitatively superior results achieving over 4 dB improvement over the state-of-the-art.",
+        '1U95Ix4mSaGouumQntgZQUP2CsQ8_iLi5',
+    ),
+    Publication(
+        (2, 2019, 'CVPR'),
+        'Leveraging Shape Completion for 3D Siamese Tracking',
+        (('silvio', 'jesus'), 'bernard'),
+        (),
+        '1Yoe7ggGY8NC6G6H3qf6pVDszMeQ4-FlV',
+        {
+            'More':
+                'https://youtu.be/2-NAaWSSrGA',
+            'Code':
+                'https://github.com/SilvioGiancola/ShapeCompletion3DTracking',
+        },
+        'Point clouds are challenging to process due to their sparsity, therefore autonomous vehicles rely more on appearance attributes than pure geometric features. However, 3D LIDAR perception can provide crucial information for urban navigation in challenging light or weather conditions. In this paper, we investigate the versatility of Shape Completion for 3D Object Tracking in LIDAR point clouds. We design a Siamese tracker that encodes model and candidate shapes into a compact latent representation. We regularize the encoding by enforcing the latent representation to decode into an object model shape. We observe that 3D object tracking and 3D shape completion complement each other. Learning a more meaningful latent representation shows better discriminatory capabilities, leading to improved tracking performance. We test our method on the KITTI Tracking set using car 3D bounding boxes. Our model reaches a 76.94% Success rate and 81.38% Precision for 3D Object Tracking, with the shape completion regularization leading to an improvement of 3% in both metrics.',
+        '179WogDvo3OglftnBVCD4t72dRzqEKDDf',
+    ),
+    Publication(
+        (2, 2019, 'CVPRW'),
+        'Learning a Controller Fusion Network by Online Trajectory Filtering for Vision-based UAV Racing',
+        ('matthias', 'guohao', 'vincent', 'neil', 'dominik', 'bernard'),
+        ('Oral', 'Best Paper Award'),
+        '1iYNnUNY52E3aOhyJqwS2UhE4R71KAv8g',
+        {
+            'Website': 'https://matthias.pw/publication/cfn/',
+        },
+        'Autonomous UAV racing has recently emerged as an interesting research problem. The dream is to beat humans in this new fast-paced sport. A common approach is to learn an end-to-end policy that directly predicts controls from raw images by imitating an expert. However, such a policy is limited by the expert it imitates and scaling to other environments and vehicle dynamics is difficult. One approach to overcome the drawbacks of an end-to-end policy is to train a network only on the perception task and handle control with a PID or MPC controller. However, a single controller must be extensively tuned and cannot usually cover the whole state space. In this paper, we propose learning an optimized controller using a DNN that fuses multiple controllers. The network learns a robust controller with online trajectory filtering, which suppresses noisy trajectories and imperfections of individual controllers. The result is a network that is able to learn a good fusion of filtered trajectories from different controllers leading to significant improvements in overall performance. We compare our trained network to controllers it has learned from, end-to-end baselines and human pilots in a realistic simulation; our network beats all baselines in extensive experiments and approaches the performance of a professional human pilot.',
+        '1Gl_iVDaOdUglHXBjIaXS3Pv2op6XXwQt',
+    ),
+    Publication(
+        (2, 2019, 'CVPRW'),
+        'Semantic Part RCNN for Real-World Pedestrian Detection',
+        ('frost', 'yancheng', 'sally', 'bernard'),
+        (),
+        '1r0R9P_65P8noVG76tX_z0T7R2obDj1PU',
+        {
+            'Website':
+                'http://openaccess.thecvf.com/CVPR2019_workshops/CVPR2019_Weakly_Supervised_Learning_for_RealWorld_Computer_Vision_Applications.py',
+        },
+        'Recent advances in pedestrian detection, a fundamental problem in computer vision, have been attained by transferring the learned features of convolutional neural networks (CNN) to pedestrians. However, existing methods often show a significant drop in performance when heavy occlusion and deformation happen because most methods rely on holistic modeling. Unlike most previous deep models that directly learn a holistic detector, we introduce the semantic part information for learning the pedestrian detector. Rather than defining semantic parts manually, we detect key points of each pedestrian proposal and then extract six semantic parts according to the predicted key points, e.g., head, upper-body, left/right arms and legs. Then, we crop and resize the semantic parts and pad them with the original proposal images. The padded images containing semantic part information are passed through CNN for further classification. Extensive experiments demonstrate the effectiveness of adding semantic part information, which achieves superior performance on the Caltech benchmark dataset.',
+        '1_V_VGo5jFzJbjXRPfHKcseV99O5-1-u0',
+    ),
+    Publication(
+        (3, 2019, 'CVPRW'),
+        'Missing Labels in Object Detection',
+        ('frost', 'yancheng', 'bernard'),
+        (),
+        '1jSSWrXKMmKUehy0kuHu7Q-4H9ddsh8pr',
+        {
+            'Website':
+                'http://openaccess.thecvf.com/CVPR2019_workshops/CVPR2019_Weakly_Supervised_Learning_for_RealWorld_Computer_Vision_Applications.py',
+        },
+        'Object detection is a fundamental problem in computer vision. Impressive results have been achieved on largescale detection benchmarks by fully-supervised object detection (FSOD) methods. However, FSOD performance is highly affected by the quality of annotations available in training. Furthermore, FSOD approaches require tremendous instance-level annotations, which are time-consuming to collect. In contrast, weakly supervised object detection (WSOD) exploits easily-collected image-level labels while it suffers from relatively inferior detection performance. In this paper, we study the effect of missing annotations on FSOD methods and analyze approaches to train an object detector from a hybrid dataset, where both instancelevel and image-level labels are employed. Extensive experiments on the challenging PASCAL VOC 2007 and 2012 benchmarks strongly demonstrate the effectiveness of our method, which gives a trade-off between collecting fewer annotations and building a more accurate object detector. Our method is also a strong baseline bridging the wide gap between FSOD and WSOD performances.',
+        '1X6kxlLO1dTq0TcgmRi7pEeaTUAhMNeuq',
+    ),
+    Publication(
+        (3, 2019, 'ICCV'),
+        'Can GCNs Go as Deep as CNNs?',
+        ('guohao', 'matthias', 'ali', 'bernard'),
+        ('Oral',),
+        '1nvU-btKvFktIba0dY2Dkk2HNpNxvlvUk',
+        {
+            'Website': 'https://sites.google.com/view/deep-gcns',
+        },
+        'Convolutional Neural Networks (CNNs) achieve impressive results in a wide variety of fields. Their success benefited from a massive boost with the ability to train very deep CNN models. Despite their positive results, CNNs fail to properly address problems with non-Euclidean data. To overcome this challenge, Graph Convolutional Networks (GCNs) build graphs to represent non-Euclidean data, and borrow concepts from CNNs and apply them to train these models. GCNs show promising results, but they are limited to very shallow models due to the vanishing gradient problem. As a result most state-of-the-art GCN algorithms are no deeper than 3 or 4 layers. In this work, we present new ways to successfully train very deep GCNs. We borrow concepts from CNNs, mainly residual/dense connections and dilated convolutions, and adapt them to GCN architectures. Through extensive experiments, we show the positive effect of these deep GCN frameworks. Finally, we use these new concepts to build a very deep 56-layer GCN, and show how it significantly boosts performance (+3.7% mIoU over state-of-the-art) in the task of point cloud semantic segmentation. The project website is available at this https URL.',
+        '1dBsem8ufxELFXHFnKj42cp8uUjg1iOS5',
+    ),
+    Publication(
+        (2, 2019, 'ICCV'),
+        '3D Instance Segmentation via Multi-task Metric Learning',
+        ('jean', 'bernard', 'marc', 'martin'),
+        ('Oral',),
+        '1Rh8-TS_vRNo5ZxU78NddH-VaXE-5Znov',
+        {},
+        "We propose a novel method for instance label segmentation of dense 3D voxel grids. We target volumetric scene representations which have been acquired with depth sensors or multi-view stereo methods and which have been processed with semantic 3D reconstruction or scene completion methods. The main task is to learn shape information about individual object instances in order to accurately separate them, including connected and incompletely scanned objects. We solve the 3D instance-labeling problem with a multi-task learning strategy. The first goal is to learn an abstract feature embedding which groups voxels with the same instance label close to each other while separating clusters with different instance labels from each other. The second goal is to learn instance information by estimating directional information of the instances' centers of mass densely for each voxel. This is particularly useful to find instance boundaries in the clustering post-processing step, as well as for scoring the quality of segmentations for the first goal. Both synthetic and real-world experiments demonstrate the viability of our approach. Our method achieves state-of-the-art performance on the ScanNet 3D instance segmentation benchmark.",
+        '1oO2I62BMAxJ8aQXDCwYWO1zPKwJVIcJJ',
+    ),
+    Publication(
+        (3, 2019, 'ICLR'),
+        'Deep Layers as Stochastic Solvers',
+        ('adel', 'bernard', 'vladlen', 'rene'),
+        (),
+        '1Am-YHOTURvPCGqYpQg917Kl0E0nG3VAG',
+        {
+            'Website':
+                'http://www.adelbibi.com/publication/stochastic_solvers/',
+            'Poster':
+                'https://drive.google.com/file/d/12ccARxNLd70gZ3U4-yCuAJZfUsC-K-DZ/view',
+        },
+        'We provide a novel perspective on the forward pass through a block of layers in a deep network. In particular, we show that a forward pass through a standard dropout layer followed by a linear layer and a non-linear activation is equivalent to optimizing a convex optimization objective with a single iteration of a au-nice Proximal Stochastic Gradient method. We further show that replacing standard Bernoulli dropout with additive dropout is equivalent to optimizing the same convex objective with a variance-reduced proximal method. By expressing both fully-connected and convolutional layers as special cases of a high-order tensor product, we unify the underlying convex optimization problem in the tensor setting and derive a formula for the Lipschitz constant L used to determine the optimal step size of the above proximal methods. We conduct experiments with standard convolutional networks applied to the CIFAR-10 and CIFAR-100 datasets, and show that replacing a block of layers with multiple iterations of the corresponding solver, with step size set via L, consistently improves classification accuracy.',
+        '1WtVenF9RmTjXqkvYVY3lh3s6_be80ACq',
+    ),
+    Publication(
+        (3, 2019, 'AAAI'),
+        'A Novel Framework for Robustness Analysis of Visual QA Models',
+        ('jiahong', ('cuong', 'modar'), 'bernard'),
+        ('Oral',),
+        '1a_Iizys9IYW1gC6aeQTjeBK75VTb2e8d',
+        {
+            'Video': 'https://youtu.be/s1mEvQVPS8E',
+            'Code': 'https://github.com/IVUL-KAUST/VQABQ',
+        },
+        'Deep neural networks have been playing an essential role in many computer vision tasks including Visual Question Answering (VQA). Until recently, the study of their accuracy was the main focus of research but now there is a trend toward assessing the robustness of these models against adversarial attacks by evaluating their tolerance to varying noise levels. In VQA, adversarial attacks can target the image and/or the proposed main question and yet there is a lack of proper analysis of the later. In this work, we propose a flexible framework that focuses on the language part of VQA that uses semantically relevant questions, dubbed basic questions, acting as controllable noise to evaluate the robustness of VQA models. We hypothesize that the level of noise is positively correlated to the similarity of a basic question to the main question. Hence, to apply noise on any given main question, we rank a pool of basic questions based on their similarity by casting this ranking task as a LASSO optimization problem. Then, we propose a novel robustness measure Rscore and two large-scale basic question datasets (BQDs) in order to standardize robustness analysis for VQA models.',
+        '1iTL6OWRgLhxruqKfozpxB7EX4Db3PtLv',
+    ),
+    Publication(
+        (3, 2019, 'WACV'),
+        'Local Color Mapping Combined with Color Transfer for Underwater Image Enhancement',
+        ('rafal', 'adel', 'bernard'),
+        (),
+        '1KPX77OUuhqP1FyfgRAaGAUiLOBR9JRHu',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/WACV_2019_Supp.pdf',
+            'Code':
+                'https://github.com/rprotasiuk/underwater_enhancement',
+        },
+        'Color correction and color transfer methods have gained a lot of attention in the past few years to circumvent color degradation that may occur due to various sources. In this paper, we propose a novel simple yet powerful strategy to profoundly enhance color distorted underwater images. The proposed approach combines both local and global information through a simple yet powerful affine transform model. Local and global information are carried through local color mapping and color covariance mapping between an input and some reference source, respectively. Several experiments on degraded underwater images demonstrate that the proposed method performs favourably to all other methods including ones that are tailored to correcting underwater images by explicit noise modelling.',
+        '1GoZ89Co5Dbl6BU0z4lDvpcnwNkAqZrQ6',
+    ),
+    Publication(
+        (2, 2019, 'RSS'),
+        'OIL: Observational Imitation Learning',
+        ('guohao', 'matthias', 'vincent', 'neil', 'dominik', 'bernard'),
+        (),
+        '1q9v0_8Ak-_JtqMwVxsu2-gXKMFw8Wfyq',
+        {
+            'Website': 'https://matthias.pw/publication/oil/',
+        },
+        'Recent work has explored the problem of autonomous navigation by imitating a teacher and learning an end-to-end policy, which directly predicts controls from raw images. However, these approaches tend to be sensitive to mistakes by the teacher and do not scale well to other environments or vehicles. To this end, we propose Observational Imitation Learning (OIL), a novel imitation learning variant that supports online training and automatic selection of optimal behavior by observing multiple imperfect teachers. We apply our proposed methodology to the challenging problems of autonomous driving and UAV racing. For both tasks, we utilize the Sim4CV simulator that enables the generation of large amounts of synthetic training data and also allows for online learning and evaluation. We train a perception network to predict waypoints from raw image data and use OIL to train another network to predict controls from these waypoints. Extensive experiments demonstrate that our trained network outperforms its teachers, conventional imitation learning (IL) and reinforcement learning (RL) baselines and even humans in simulation. The project website is available at this https URL and a video at this https URL.',
+        '1mWx7nbh8g2cL6pn20k9vD0tfq9h1WCwW',
+    ),
+    Publication(
+        (3, 2018, 'TPAMI'),
+        'Lp-Box ADMM: A Versatile Framework for Integer Programming',
+        ('baoyuan', 'bernard'),
+        (),
+        '1f7TfNBIKWIT1yzXZ7fA3QSxp3c5hJD5M',
+        {},
+        'This paper revisits the integer programming (IP) problem, which plays a fundamental role in many computer vision and machine learning applications. The literature abounds with many seminal works that address this problem, some focusing on continuous approaches (e.g., linear program relaxation), while others on discrete ones (e.g., min-cut). However, since many of these methods are designed to solve specific IP forms, they cannot adequately satisfy the simultaneous requirements of accuracy, feasibility, and scalability. To this end, we propose a novel and versatile framework called lp-box ADMM, which is based on two main ideas. (1) The discrete constraint is equivalently replaced by the intersection of a box and an lp-norm sphere. (2) We infuse this equivalence into the ADMM (Alternating Direction Method of Multipliers) framework to handle the continuous constraints separately and to harness its attractive properties. More importantly, the ADMM update steps can lead to manageable sub-problems in the continuous domain. To demonstrate its efficacy, we apply it to an optimization form that occurs often in computer vision and machine learning, namely binary quadratic programming (BQP). In this case, the ADMM steps are simple, computationally efficient. Moreover, we present the theoretic analysis about the global convergence of the lp-box ADMM through adding a perturbation with the sufficiently small factor ϵ to the original IP problem. Specifically, the globally converged solution generated by lp-box ADMM for the perturbed IP problem will be close to the stationary and feasible point of the original IP problem within O(ϵ). We demonstrate the applicability of lp-box ADMM on three important applications: MRF energy minimization, graph matching, and clustering. Results clearly show that it significantly outperforms existing generic IP solvers both in runtime and objective. It also achieves very competitive performance to state-of-the-art methods designed specifically for these applications.',
+        '1h2Snnstq3-BYS-9DakjpZP4lNcn_ANro',
+    ),
+    Publication(
+        (3, 2018, 'IJCV'),
+        'Multi-label Learning with Missing Labels Using Mixed Dependency',
+        ('baoyuan', 'fan', 'wei', 'bernard', 'siwei'),
+        (),
+        '1Nnm0funn3RGpGy_dqEETqQdyKuyChZQ0',
+        {},
+        'This work focuses on the problem of multi-label learning with missing labels (MLML), which aims to label each test instance with multiple class labels given training instances that have an incomplete/partial set of these labels (i.e., some of their labels are missing). The key point to handle missing labels is propagating the label information from the provided labels to missing labels, through a dependency graph that each label of each instance is treated as a node. We build this graph by utilizing different types of label dependencies. Specifically, the instance-level similarity is served as undirected edges to connect the label nodes across different instances and the semantic label hierarchy is used as directed edges to connect different classes. This base graph is referred to as the mixed dependency graph, as it includes both undirected and directed edges. Furthermore, we present another two types of label dependencies to connect the label nodes across different classes. One is the class co-occurrence, which is also encoded as undirected edges. Combining with the above base graph, we obtain a new mixed graph, called mixed graph with co-occurrence (MG-CO). The other is the sparse and low rank decomposition of the whole label matrix, to embed high-order dependencies over all labels. Combining with the base graph, the new mixed graph is called as MG-SL (mixed graph with sparse and low rank decomposition). Based on MG-CO and MG-SL, we further propose two convex transductive formulations of the MLML problem, denoted as MLMG-CO and MLMG-SL respectively. In both formulations, the instance-level similarity is embedded through a quadratic smoothness term, while the semantic label hierarchy is used as a linear constraint. In MLMG-CO, the class co-occurrence is also formulated as a quadratic smoothness term, while the sparse and low rank decomposition is incorporated into MLMG-SL, through two additional matrices (one is assumed as sparse, and the other is assumed as low rank) and an equivalence constraint between the summation of this two matrices and the original label matrix. Interestingly, two important applications, including image annotation and tag based image retrieval, can be jointly handled using our proposed methods. Experimental results on several benchmark datasets show that our methods lead to significant improvements in performance and robustness to missing labels over the state-of-the-art methods.',
+        '1sSX4zZw6W0Rk-t2JGXPhRcOTaniM8lfW',
+    ),
+    Publication(
+        (2, 2018, 'IJCV'),
+        'Sim4CV: A photo-realistic simulator for computer vision applications',
+        ('matthias', 'vincent', 'jean', 'neil', 'bernard'),
+        (),
+        '1KnpnunwyB_tmxONnqlmOANjvYsHB-Lul',
+        {},
+        'We present a photo-realistic training and evaluation simulator (Sim4CV) (http://www.sim4cv.org) with extensive applications across various fields of computer vision. Built on top of the Unreal Engine, the simulator integrates full featured physics based cars, unmanned aerial vehicles (UAVs), and animated human actors in diverse urban and suburban 3D environments. We demonstrate the versatility of the simulator with two case studies: autonomous UAV-based tracking of moving objects and autonomous driving using supervised learning. The simulator fully integrates both several state-of-the-art tracking algorithms with a benchmark evaluation tool and a deep neural network architecture for training vehicles to drive autonomously. It generates synthetic photo-realistic datasets with automatic ground truth annotations to easily extend existing real-world datasets and provides extensive synthetic data variety through its ability to reconfigure synthetic worlds on the fly using an automatic world generation tool.',
+        '1JRiGrhw3rNKL47HFLHiCYrd65WwWt0Rr',
+    ),
+    Publication(
+        (3, 2018, 'CVPR'),
+        'Analytic Expressions for Probabilistic Moments of PL-DNN with Gaussian Input',
+        (('adel', 'modar'), 'bernard'),
+        ('Oral',),
+        '183T-npqzO_7928bahmF8RW84LYj0OueC',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Analytic%20Expressions%20for%20Probabilistic%20Moments%20of%20PL-DNN%20with%20Gaussian%20Input.pdf',
+            'Poster':
+                'https://drive.google.com/file/d/1au9sd2NALWLrNZWFNDe4AkTRv7b9Z_kA/view?usp=sharing',
+            'Slides':
+                'https://drive.google.com/file/d/1cu2jdYItdPblB_MJoWIL73n_tDtRy0xV/view?usp=sharing',
+            'Video':
+                'https://youtu.be/op9IBox_TTc?t=673',
+            'Code':
+                'https://github.com/ModarTensai/network_moments',
+        },
+        'The outstanding performance of deep neural networks (DNNs), for the visual recognition task in particular, has been demonstrated on several large-scale benchmarks. This performance has immensely strengthened the line of research that aims to understand and analyze the driving rea- sons behind the effectiveness of these networks. One impor- tant aspect of this analysis has recently gained much atten- tion, namely the reaction of a DNN to noisy input. This has spawned research on developing adversarial input attacks as well as training strategies that make DNNs more robust against these attacks. To this end, we derive in this paper exact analytic expressions for the first and second mo- ments (mean and variance) of a small piecewise linear (PL) network (Affine, ReLU, Affine) subject to general Gaussian input. We experimentally show that these expressions are tight under simple linearizations of deeper PL-DNNs, es- pecially popular architectures in the literature (e.g. LeNet and AlexNet). Extensive experiments on image classifica- tion show that these expressions can be used to study the behaviour of the output mean of the logits for each class, the interclass confusion and the pixel-level spatial noise sensi- tivity of the network. Moreover, we show how these expres- sions can be used to systematically construct targeted and non-targeted adversarial attacks.',
+        '1ebjRvif9ybFgshW0QcTDH8v_XUx9bxOz',
+    ),
+    Publication(
+        (3, 2018, 'CVPR'),
+        'Tagging Like Humans: Diverse and Distinct Image Annotation',
+        ('baoyuan', 'weidong', 'peng', 'wei', 'bernard', 'siwei'),
+        (),
+        '1wG2CWbzrKeVvxthe3oDNU7noEO87i-Up',
+        {},
+        'In this work we propose a new automatic image annotation model, dubbed diverse and distinct image annotation (D2IA). The generative model D2IA is inspired by the ensemble of human annotations, which create semantically relevant, yet distinct and diverse tags. In D2IA, we generate a relevant and distinct tag subset, in which the tags are relevant to the image contents and semantically distinct to each other, using sequential sampling from a determinantal point process (DPP) model. Multiple such tag subsets that cover diverse semantic aspects or diverse semantic levels of the image contents are generated by randomly perturbing the DPP sampling process. We leverage a generative adversarial network (GAN) model to train D2IA. Extensive experiments including quantitative and qualitative comparisons, as well as human subject studies, on two benchmark datasets demonstrate that the proposed model can produce more diverse and distinct tags than the state-of-the-arts.',
+        '12o_qho7H3ijEb8sPEfDQxOVxPNt4c48h',
+    ),
+    Publication(
+        (2, 2018, 'CVPR'),
+        'ISTA-Net: Interpretable Optimization-Inspired Deep Network for Image Compressive Sensing',
+        ('jian', 'bernard'),
+        (),
+        '1W__LTrhSFyrhBZFXfJ16QTrbEHeWIjyy',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/ISTA-Net%20Interpretable%20Optimization-Inspired%20Deep%20Network%20for%20Image.pdf',
+            'Code':
+                'http://jianzhang.tech/projects/ISTA-Net',
+        },
+        'With the aim of developing a fast yet accurate algorithm for compressive sensing (CS) reconstruction of natural images, we combine in this paper the merits of two existing categories of CS methods: the structure insights of traditional optimization-based methods and the speed of recent network-based ones. Specifically, we propose a novel structured deep network, dubbed ISTA-Net, which is inspired by the Iterative Shrinkage-Thresholding Algorithm (ISTA) for optimizing a general L1 norm CS reconstruction model. To cast ISTA into deep network form, we develop an effective strategy to solve the proximal mapping associated with the sparsity-inducing regularizer using nonlinear transforms. All the parameters in ISTA-Net (e.g. non-linear transforms, shrinkage thresholds, step sizes, etc.) are learned end-to-end, rather than being hand-crafted. Moreover, considering that the residuals of natural images are more compressible, an enhanced version of ISTA-Net in the residual domain, dubbed ISTA-Net+, is derived to further improve CS reconstruction. Extensive CS experiments demonstrate that the proposed ISTA-Nets outperform existing state-of-the-art optimization-based and network-based CS methods by large margins, while maintaining fast computational speed.',
+        '1psm5UEWQz64cvaI0H3JKu1O7bgnuMc1D',
+    ),
+    Publication(
+        (2, 2018, 'CVPR'),
+        'Finding Tiny Faces in the Wild with Generative Adversarial Network',
+        ('yancheng', 'yongqiang', 'mingli', 'bernard'),
+        ('Oral',),
+        '1dQGQEtDzDvlB5ORRbKwC8wq9NrabhE6_',
+        {
+            'Video': 'https://youtu.be/DFHgJWQDE6o?t=354',
+        },
+        'Face detection techniques have been developed for decades, and one of remaining open challenges is detecting small faces in unconstrained conditions. The reason is that tiny faces are often lacking detailed information and blurring. In this paper, we proposed an algorithm to directly generate a clear high-resolution face from a blurry small one by adopting a generative adversarial network (GAN). Toward this end, the basic GAN formulation achieves it by super-resolving and refining sequentially (e.g. SR-GAN and cycle-GAN). However, we design a novel network to address the problem of super-resolving and refining jointly. We also introduce new training losses to guide the generator network to recover fine details and to promote the discriminator network to distinguish real vs. fake and face vs. non-face simultaneously. Extensive experiments on the challenging dataset WIDER FACE demonstrate the effectiveness of our proposed method in restoring a clear high-resolution face from a blurry small one, and show that the detection performance outperforms other state-of-the-art methods.',
+        '13N6jcV6UKEJMATFSF2RotZJ-Ha5Wc0hL',
+    ),
+    Publication(
+        (2, 2018, 'CVPR'),
+        'W2F: A Weakly-Supervised to Fully-Supervised Framework',
+        ('yongqiang', 'yancheng', 'mingli', 'yongqiangli', 'bernard'),
+        (),
+        '1GCw5SWSnCuvVgAvjPMuHf1drUE15lhZS',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/W2F%20A%20Weakly-Supervised%20to%20Fully-Supervised%20Framework.pdf',
+        },
+        'Weakly-supervised object detection has attracted much attention lately, since it does not require bounding box annotations for training. Although significant progress has also been made, there is still a large gap in performance between weakly-supervised and fully-supervised object detection. Recently, some works use pseudo ground-truths which are generated by a weakly-supervised detector to train a supervised detector. Such approaches incline to find the most representative parts of objects, and only seek one ground-truth box per class even though many same-class instances exist. To overcome these issues, we propose a weakly-supervised to fully-supervised framework, where a weakly-supervised detector is implemented using multiple instance learning. Then, we propose a pseudo ground-truth excavation (PGE) algorithm to find the pseudo ground-truth of each instance in the image. Moreover, the pseudo groundtruth adaptation (PGA) algorithm is designed to further refine the pseudo ground-truths from PGE. Finally, we use these pseudo ground-truths to train a fully-supervised detector. Extensive experiments on the challenging PASCAL VOC 2007 and 2012 benchmarks strongly demonstrate the effectiveness of our framework. We obtain 52.4% and 47.8% mAP on VOC2007 and VOC2012 respectively, a significant improvement over previous state-of-the-art methods.',
+        '1YTn8NZdL-sKpyPOhyrqhBHQEg7g2jBTv',
+    ),
+    Publication(
+        (1, 2018, 'CVPRW'),
+        'SoccerNet: A Scalable Dataset for Action Spotting in Soccer Videos',
+        ('silvio', 'mohieddine', 'tarek', 'bernard'),
+        ('Oral',),
+        '1RkNnTRlf4m4XyLqD6pIm3xR08k0ndLZA',
+        {
+            'Website': 'https://silviogiancola.github.io/SoccerNet/',
+            'Data': 'https://cemse.kaust.edu.sa/ivul/soccernet',
+            'Video': 'https://youtu.be/x4E3DPy84xM',
+        },
+        'In this paper, we introduce SoccerNet, a benchmark for action spotting in soccer videos. The dataset is composed of 500 complete soccer games from six main European leagues, covering three seasons from 2014 to 2017 and a total duration of 764 hours. A total of 6,637 temporal annotations are automatically parsed from online match reports at a one minute resolution for three main classes of events (Goal, Yellow/Red Card, and Substitution). As such, the dataset is easily scalable. These annotations are manually refined to a one second resolution by anchoring them at a single timestamp following well-defined soccer rules. With an average of one event every 6.9 minutes, this dataset focuses on the problem of localizing very sparse events within long videos. We define the task of spotting as finding the anchors of soccer events in a video. Making use of recent developments in the realm of generic action recognition and detection in video, we provide strong baselines for detecting soccer events. We show that our best model for classifying temporal segments of length one minute reaches a mean Average Precision (mAP) of 67.8%. For the spotting task, our baseline reaches an Average-mAP of 49.7% for tolerances ranging from 5 to 60 seconds.',
+        '1WaMpmypgTBU7VgXHpu2nypB289mhaGho',
+    ),
+    Publication(
+        (2, 2018, 'CVPRW'),
+        'Integration of Absolute Orientation Measurements in the KinectFusion Reconstruction pipeline',
+        ('silvio', 'jens', 'peter', 'bernard'),
+        (),
+        '1mg07T9nDc74H5EUuUcqzpEoK8OnKY9AA',
+        {},
+        'In this paper, we show how absolute orientation measurements provided by low-cost but high-fidelity IMU sensors can be integrated into the KinectFusion pipeline. We show that integration improves both runtime, robustness and quality of the 3D reconstruction. In particular, we use this orientation data to seed and regularize the ICP registration technique. We also present a technique to filter the pairs of 3D matched points based on the distribution of their distances. This filter is implemented efficiently on the GPU. Estimating the distribution of the distances helps control the number of iterations necessary for the convergence of the ICP algorithm. Finally, we show experimental results that highlight improvements in robustness, a speed-up of almost 12%, and a gain in tracking quality of 53% for the ATE metric on the Freiburg benchmark.',
+        '1TrHZhzWBy5cH-jYYwJ1ig_ZIKoIMfOnh',
+    ),
+    Publication(
+        (1, 2018, 'ECCV'),
+        'What do I Annotate Next? An Empirical Study of Active Learning for Action Localization',
+        ('fabian', 'joon', 'hailin', 'bernard'),
+        (),
+        '1nyotw_mLa-AmiXLL40Npb9e8zTY8qVH2',
+        {
+            'Website':
+                'https://cabaf.github.io/what-to-annotate-next/',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/What%20do%20I%20Annotate%20Next%20An%20Empirical%20Study%20of%20Active%20Learning%20for%20Action%20Localization-supp.pdf',
+        },
+        'Despite tremendous progress achieved in temporal action localization, state-of-the-art methods still struggle to train accurate models when annotated data is scarce. In this paper, we introduce a novel active learning framework for temporal localization that aims to mitigate this data dependency issue. We equip our framework with active selection functions that can reuse knowledge from previously annotated datasets. We study the performance of two state-of-the-art active selection functions as well as two widely used active learning baselines. To validate the effectiveness of each one of these selection functions, we conduct simulated experiments on ActivityNet. We find that using previously acquired knowledge as a bootstrapping source is crucial for active learners aiming to localize actions. When equipped with the right selection function, our proposed framework exhibits significantly better performance than standard active learning strategies, such as uncertainty sampling. Finally, we employ our framework to augment the newly compiled Kinetics action dataset with ground-truth temporal annotations. As a result, we collect Kinetics-Localization, a novel large-scale dataset for temporal action localization, which contains more than 15K YouTube videos.',
+        '1nu192a-faDxdlrg0EU7_WQREOheLq_XI',
+    ),
+    Publication(
+        (1, 2018, 'ECCV'),
+        'Action Search: Spotting Actions in Videos and Its Application to Temporal Action Localization',
+        (('humam', 'fabian'), 'bernard'),
+        (),
+        '1gP6DKLWbfNsbEAFl1Uwh6LqRfL_tLMYi',
+        {
+            'Website':
+                'http://humamalwassel.com/publication/action-search/',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Action%20Search%20Spotting%20Targets%20in%20Videos%20and%20Its%20Application%20to%20Temporal%20Action%20Localization-supp.pdf',
+            'Video':
+                'https://youtu.be/HHGoz4Y5QzM',
+        },
+        'State-of-the-art temporal action detectors inefficiently search the entire video for specific actions. Despite the encouraging progress these methods achieve, it is crucial to design automated approaches that only explore parts of the video which are the most relevant to the actions being searched for. To address this need, we propose the new problem of action spotting in video, which we define as finding a specific action in a video while observing a small portion of that video. Inspired by the observation that humans are extremely efficient and accurate in spotting and finding action instances in video, we propose Action Search, a novel Recurrent Neural Network approach that mimics the way humans spot actions. Moreover, to address the absence of data recording the behavior of human annotators, we put forward the Human Searches dataset, which compiles the search sequences employed by human annotators spotting actions in the AVA and THUMOS14 datasets. We consider temporal action localization as an application of the action spotting problem. Experiments on the THUMOS14 dataset reveal that our model is not only able to explore the video efficiently (observing on average 17.3% of the video) but it also accurately finds human activities with 30.8% mAP.',
+        '1lHyJ7o3gwYpAKisdlHq9ZTngoypwAUfK',
+    ),
+    Publication(
+        (1, 2018, 'ECCV'),
+        'Diagnosing Error in Temporal Action Detectors',
+        (('humam', 'fabian', 'victor'), 'bernard'),
+        (),
+        '1jKlm47vzrExFbBLwRFvJYbkkyin2n9al',
+        {
+            'Website':
+                'http://humamalwassel.com/publication/detad/',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Diagnosing%20Error%20in%20Temporal%20Action%20Detectors-supp.pdf',
+            'Video':
+                'https://youtu.be/rnndiuF2ouM',
+            'Code':
+                'https://github.com/HumamAlwassel/DETAD',
+        },
+        'Despite the recent progress in video understanding and the continuous rate of improvement in temporal action localization throughout the years, it is still unclear how far (or close?) we are to solving the problem. To this end, we introduce a new diagnostic tool to analyze the performance of temporal action detectors in videos and compare different methods beyond a single scalar metric. We exemplify the use of our tool by analyzing the performance of the top rewarded entries in the latest ActivityNet action localization challenge. Our analysis shows that the most impactful areas to work on are: strategies to better handle temporal context around the instances, improving the robustness w.r.t. the instance absolute and relative size, and strategies to reduce the localization errors. Moreover, our experimental analysis finds the lack of agreement among annotator is not a major roadblock to attain progress in the field. Our diagnostic tool is publicly available to keep fueling the minds of other researchers with additional insights about their algorithms.',
+        '1uT-7-jWMbujIV7nKeERegpH5toXX8Gpv',
+    ),
+    Publication(
+        (2, 2018, 'ECCV'),
+        'TrackingNet: A Large-Scale Dataset and Benchmark for Object Tracking in the Wild',
+        (('matthias', 'adel', 'silvio'), 'salman', 'bernard'),
+        (),
+        '1aqPVbSdIp61TGqEveGgQ01jBxR0CnKTc',
+        {
+            'Website':
+                'http://www.tracking-net.org',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/TrackingNet%20A%20Large%20Scale%20Dataset%20and%20Benchmark%20for%20Object%20Tracking%20in%20the%20Wild-supp.pdf',
+            'Video':
+                'https://youtu.be/5n09hq3eweM',
+        },
+        'Despite the numerous developments in object tracking, further improvement of current tracking algorithms is limited by small and mostly saturated datasets. As a matter of fact, data-hungry trackers based on deep-learning currently rely on object detection datasets due to the scarcity of dedicated large-scale tracking datasets. In this work, we present TrackingNet, the first large-scale dataset and benchmark for object tracking in the wild. We provide more than 30K videos with more than 14 million dense bounding box annotations. Our dataset covers a wide selection of object classes in broad and diverse context. By releasing such a large-scale dataset, we expect deep trackers to further improve and generalize. In addition, we introduce a new benchmark composed of 500 novel videos, modeled with a distribution similar to our training dataset. By sequestering the annotation of the test set and providing an online evaluation server, we provide a fair benchmark for future development of object trackers. Deep trackers fine-tuned on a fraction of our dataset improve their performance by up to 1.6% on OTB100 and up to 1.7% on TrackingNet Test. We provide an extensive benchmark on TrackingNet by evaluating more than 20 trackers. Our results suggest that object tracking in the wild is far from being solved.',
+        '1FUGH7yQy9PzBXPM61Fw_LI3RfikkM4EV',
+    ),
+    Publication(
+        (3, 2018, 'ECCV'),
+        'Face Super-resolution Guided by Facial Component Heatmaps',
+        ('xin', 'basura', 'bernard', 'fatih', 'richard'),
+        (),
+        '1XwV6TkyQKBN9LVK4VCLghQMpXzABVb8Y',
+        {
+            'Code':
+                'https://github.com/XinYuANU/Facial-Heatmaps-Guided-Hallucination',
+        },
+        'State-of-the-art face super-resolution methods leverage deep convolutional neural networks to learn a mapping between low-resolution (LR) facial patterns and their corresponding high-resolution (HR) counterparts by exploring local appearance information. However, most of these methods do not account for facial structure and suffer from degradations due to large pose variations and misalignments. In this paper, we propose a method that explicitly incorporates structural information of faces into the face super-resolution process by using a multi-task convolutional neural network (CNN). Our CNN has two branches: one for super-resolving face images and the other branch for predicting salient regions of a face coined facial component heatmaps. These heatmaps encourage the upsampling stream to generate super-resolved faces with higher-quality details. Our method not only uses low-level information (i.e., intensity similarity), but also middle-level information (i.e., face structure) to further explore spatial constraints of facial components from LR inputs images. Therefore, we are able to super-resolve very small unaligned face images (16×16 pixels) with a large upscaling factor of 8×, while preserving face structure. Extensive experiments demonstrate that our network achieves superior face hallucination results and outperforms the state-of-the-art.',
+        '1Hw2mmgajfHnZyzf48SIrX-sfjIskWT30',
+    ),
+    Publication(
+        (2, 2018, 'ECCV'),
+        'SOD-MTGAN: Small Object Detection via Multi-Task Generative Adversarial Network',
+        (('yancheng', 'yongqiang'), 'mingli', 'bernard'),
+        (),
+        '1C93ZhO-_0YsVS1lF3mbuo5FUcpbAcNvd',
+        {},
+        'Object detection is a fundamental and important problem in computer vision. Although impressive results have been achieved on large/medium sized objects on large-scale detection benchmarks (e.g. the COCO dataset), the performance on small objects is far from satisfaction. The reason is that small objects lack sufficient detailed appearance information, which can distinguish them from the background or similar objects. To deal with small object detection problem, we propose an end-to-end multi-task generative adversarial network (MTGAN). In the MTGAN, the generator is a super-resolution network, which can up-sample small blurred images into fine-scale ones and recover detailed information for more accurate detection. The discriminator is a multitask network, which describes each super-resolution image patch with a real/fake score, object category scores, and bounding box regression offsets. Furthermore, to make the generator recover more details for easier detection, the classification and regression losses in the discriminator are back-propagated into the generator during training. Extensive experiments on the challenging COCO dataset demonstrate the effectiveness of the proposed method in restoring a clear super-resolution image from a blurred small one, and show that the detection performance, especially for small sized objects, improves over state-of-the-art methods.',
+        '1aBEMhMZSNi883sWs58sbzG4B6Tm-4MMY',
+    ),
+    Publication(
+        (2, 2018, 'ECCVW'),
+        'Teaching UAVs to Race: End-to-End Regression of Agile Controls in Simulation',
+        (('matthias', 'vincent'), 'neil', 'dominik', 'bernard'),
+        ('Oral', 'Best Paper Award'),
+        '1LWrQY-OXg3l3FTTS-FvXIvGswystU0DA',
+        {
+            'Website': 'https://matthias.pw/publication/deep-fpv-racer/',
+        },
+        'Automating the navigation of unmanned aerial vehicles (UAVs) in diverse scenarios has gained much attention in recent years. However, teaching UAVs to fly in challenging environments remains an unsolved problem, mainly due to the lack of training data. In this paper, we train a deep neural network to predict UAV controls from raw image data for the task of autonomous UAV racing in a photo-realistic simulation. Training is done through imitation learning with data augmentation to allow for the correction of navigation mistakes. Extensive experiments demonstrate that our trained network (when sufficient data augmentation is used) outperforms state-of-the-art methods and flies more consistently than many human pilots. Additionally, we show that our optimized network architecture can run in real-time on embedded hardware, allowing for efficient on-board processing critical for real-world deployment. From a broader perspective, our results underline the importance of extensive data augmentation techniques to improve robustness in end-to-end learning setups.',
+        '1spLy_koUIHmeQAhKu0UhV7t9g8AAuiGo',
+    ),
+    Publication(
+        (2, 2018, 'PatternRecognition'),
+        'Weakly-supervised object detection via mining pseudo ground truth bounding-boxes',
+        ('yongqiang', 'yancheng', 'mingli', 'yongqiangli', 'bernard'),
+        (),
+        '1XssG8q0oa1uPtNMiRzu1Z50VkVyWcaUL',
+        {},
+        'Recently, weakly-supervised object detection has attracted much attention, since it does not require expensive bounding-box annotations while training the network. Although significant progress has also been made, there is still a large gap on the performance between weakly-supervised and fully-supervised object detection. To mitigate this gap, some works try to use the pseudo ground truths generated by a weakly-supervised detector to train a supervised detector. However, such approaches incline to find the most representative parts instead of the whole body of an object, and only seek one ground truth bounding-box per class even though many same-class instances exist in an image. To address these issues, we propose a weakly-supervised to fully-supervised framework (W2F), where a weakly-supervised detector is implemented using multiple instance learning. And then, we propose a pseudo ground-truth excavation (PGE) algorithm to find the accurate pseudo ground truth bounding-box for each instance. Moreover, the pseudo ground-truth adaptation (PGA) algorithm is designed to further refine those pseudo ground truths mined by PGE algorithm. Finally, the mined pseudo ground truths are used as supervision to train a fully-supervised detector. Additionally, we also propose an iterative ground-truth learning (IGL) approach, which enhances the quality of the pseudo ground truths by using the predictions of the fully-supervised detector iteratively. Extensive experiments on the challenging PASCAL VOC 2007 and 2012 benchmarks strongly demonstrate the effectiveness of our method. We obtain 53.1% and 49.4% mAP on VOC2007 and VOC2012 respectively, which is a significant improvement over previous state-of-the-art methods.',
+        '1kQEIbNdHDR4DkC_ARgtmGZtfdiSW9-Zm',
+    ),
+    Publication(
+        (2, 2018, 'CORL'),
+        'Driving Policy Transfer via Modularity and Abstraction',
+        ('matthias', 'alexey', 'bernard', 'vladlen'),
+        (),
+        '1Hz_vll5chebyjvB8mdjErW3wXdyBhUj3',
+        {
+            'Website':
+                'https://matthias.pw/publication/driving-policy-transfer/',
+            'Video':
+                'https://youtu.be/BrMDJqI6H5U',
+        },
+        'End-to-end approaches to autonomous driving have high sample complexity and are difficult to scale to realistic urban driving. Simulation can help end-to-end driving systems by providing a cheap, safe, and diverse training environment. Yet training driving policies in simulation brings up the problem of transferring such policies to the real world. We present an approach to transferring driving policies from simulation to reality via modularity and abstraction. Our approach is inspired by classic driving systems and aims to combine the benefits of modular architectures and end-to-end deep learning approaches. The key idea is to encapsulate the driving policy such that it is not directly exposed to raw perceptual input or low-level vehicle dynamics. We evaluate the presented approach in simulated urban environments and in the real world. In particular, we transfer a driving policy trained in simulation to a 1/5-scale robotic truck that is deployed in a variety of conditions, with no finetuning, on two continents.',
+        '1U7pfMeYF2QOkvLislulPRk15L3HnU_Bv',
+    ),
+    Publication(
+        (3, 2017, 'TPAMI'),
+        'L0TV: A Sparse Optimization Method for Impulse Noise Image Restoration',
+        ('ganzhao', 'bernard'),
+        (),
+        '1KJqf7h-3ozOCehQIwYQpxsKCRRUcmrTa',
+        {},
+        'Total Variation (TV) is an effective and popular prior model in the field of regularization-based image processing. This paper focuses on total variation for removing impulse noise in image restoration. This type of noise frequently arises in data acquisition and transmission due to many reasons, e.g. a faulty sensor or analog-to-digital converter errors. Removing this noise is an important task in image restoration. State-of-the-art methods such as Adaptive Outlier Pursuit(AOP) [57], which is based on TV with l02-norm data fidelity, only give sub-optimal performance. In this paper, we propose a new sparse optimization method, called l0TV-PADMM, which solves the TV-based restoration problem with l0-norm data fidelity. To effectively deal with the resulting non-convex non-smooth optimization problem, we first reformulate it as an equivalent biconvex Mathematical Program with Equilibrium Constraints (MPEC), and then solve it using a proximal Alternating Direction Method of Multipliers (PADMM). Our l0TV-PADMM method finds a desirable solution to the original l0-norm optimization problem and is proven to be convergent under mild conditions. We apply l0TV-PADMM to the problems of image denoising and deblurring in the presence of impulse noise. Our extensive experiments demonstrate that l0TV-PADMM outperforms state-of-the-art image restoration methods.',
+        '1Eeww9huQkF5iGZpfbPTviMN-jGLsSHTv',
+    ),
+    Publication(
+        (3, 2017, 'CVPR'),
+        'FFTLasso: Large-Scale LASSO in the Fourier Domain',
+        ('adel', 'hani', 'bernard'),
+        ('Oral',),
+        '1l_nITGVloFPWnsjoxpTtO5eyA57J66sj',
+        {
+            'Website':
+                'http://www.adelbibi.com/',
+            'Code':
+                'https://github.com/adelbibi/FFTLasso',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/FFTLasso%20supplementary%20material%20PDF.pdf',
+            'Video':
+                'https://youtu.be/UQNb7a9KUYk',
+        },
+        'In this paper, we revisit the LASSO sparse representation problem, which has been studied and used in a variety of different areas, ranging from signal processing and information theory to computer vision and machine learning. In the vision community, it found its way into many important applications, including face recognition, tracking, super resolution, image denoising, to name a few. Despite advances in efficient sparse algorithms, solving large-scale LASSO problems remains a challenge. To circumvent this difficulty, people tend to downsample and subsample the problem (e.g. via dimensionality reduction) to maintain a manageable sized LASSO, which usually comes at the cost of losing solution accuracy. This paper proposes a novel circulant reformulation of the LASSO that lifts the problem to a higher dimension, where ADMM can be efficiently applied to its dual form. Because of this lifting, all optimization variables are updated using only basic element-wise operations, the most computationally expensive of which is a 1D FFT. In this way, there is no need for a linear system solver nor matrix-vector multiplication. Since all operations in our FFTLasso method are element-wise, the subproblems are completely independent and can be trivially parallelized (e.g. on a GPU). The attractive computational properties of FFTLasso are verified by extensive experiments on synthetic and real data and on the face recognition task. They demonstrate that FFTLasso scales much more effectively than a state-of-the-art solver.',
+        '1YN7RDl6BAPAI15JIXitxue-oczxI11nN',
+    ),
+    Publication(
+        (3, 2017, 'CVPR'),
+        'Diverse Image Annotation',
+        ('baoyuan', 'fan', 'wei', 'bernard'),
+        (),
+        '1Fq8E1UQwbNcwmZZSOtjf5lTzVwWAoUe7',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Diverse%20Image%20Annotation%20Supplement.zip',
+        },
+        'In this work, we study a new image annotation task called diverse image annotation (DIA). Its goal is to describe an image using a limited number of tags, whereby the retrieved tags need to cover as much useful information about the image as possible. As compared to the conventional image annotation task, DIA requires the tags to be not only representative of the image but also diverse from each other, so as to reduce redundancy. To this end, we treat DIA as a subset selection problem, based on the conditional determinantal point process (DPP) model, which encodes representation and diversity jointly. We further explore semantic hierarchy and synonyms among candidate tags to define weighted semantic paths. It is encouraged that two tags with the same semantic path are not retrieved simultaneously for the same image. This restriction is embedded into the algorithm used to sample from the learned conditional DPP model. Interestingly, we find that conventional metrics for image annotation (e.g., precision, recall, and F 1 score) only consider an overall representative capacity of all the retrieved tags, while ignoring their diversity. Thus, we propose new semantic metrics based on our proposed weighted semantic paths. An extensive subject study verifies that the proposed metrics are much more consistent with human evaluation than conventional annotation metrics. Experiments on two benchmark datasets show that the proposed method produces more representative and diverse tags, compared with existing methods.',
+        '18CEb_ZBCgcwlN96bVgUJ4k2Kzqns6afr',
+    ),
+    Publication(
+        (1, 2017, 'CVPR'),
+        'SCC: Semantic Context Cascade for Efficient Action Detection',
+        ('fabian', 'wayner', 'victor', 'bernard'),
+        (),
+        '1dET2PZbiqaXFPncX_qIFIF15boyeKkae',
+        {
+            'Website': 'http://www.cabaf.net/scc',
+            'More': 'http://www.cabaf.net/scc/supplementary.html',
+        },
+        'Despite the recent advances in large-scale video analysis, action detection remains as one of the most challenging unsolved problems in computer vision. This snag is in part due to the large volume of data that needs to be analyzed to detect actions in videos. Existing approaches have mitigated the computational cost, but still, these methods lack rich high-level semantics that helps them to localize the actions quickly.In this paper, we introduce a Semantic Cascade Context (SCC) model that aims to detect action in long video sequences. By embracing semantic priors associated with human activities, SCC produces high-quality class-specific action proposals and prune unrelated activities in a cascade fashion. Experimental results on ActivityNet unveils that SCC achieves state-of-the-art performance for action detection while operating at real time.',
+        '15-pBfBp20MKmlOIV4eJZltusjBMUgK2B',
+    ),
+    Publication(
+        (2, 2017, 'CVPR'),
+        'A Matrix Splitting Method for Composite Function Minimization',
+        ('ganzhao', 'weishi', 'bernard'),
+        (),
+        '12Kkw2ziI8X9tqFyfWUOv9rQ5lrCq4QXu',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/A%20Matrix%20Splitting%20Method%20for%20Composite%20Function%20Minimization%20Supplement.pdf',
+        },
+        'Composite function minimization captures a wide spectrum of applications in both computer vision and machine learning. It includes bound constrained optimization and cardinality regularized optimization as special cases. This paper proposes and analyzes a new Matrix Splitting Method (MSM) for minimizing composite functions. It can be viewed as a generalization of the classical Gauss-Seidel method and the Successive Over-Relaxation method for solving linear systems in the literature. Incorporating a new Gaussian elimination procedure, the matrix splitting method achieves state-of-the-art performance. For convex problems, we establish the global convergence, convergence rate, and iteration complexity of MSM, while for non-convex problems, we prove its global convergence. Finally, we validate the performance of our matrix splitting method on two particular applications: nonnegative matrix factorization and cardinality regularized sparse coding. Extensive experiments show that our method outperforms existing composite function minimization techniques in term of both efficiency and efficacy.',
+        '1aAQpe-hke8St5-ZuQ9hhUp5AwdFYfdiq',
+    ),
+    Publication(
+        (2, 2017, 'CVPR'),
+        'Context-Aware Correlation Filter Tracking',
+        ('matthias', 'neil', 'bernard'),
+        ('Oral',),
+        '1SS-y8wYoT7Nr2LfypCRaco--IAOd5ZTU',
+        {
+            'Website': 'http://matthias.pw/',
+            'Code': 'https://goo.gl/gJ2vTs',
+            'More': 'https://goo.gl/Mv0gnX',
+            'Video': 'https://youtu.be/-mEkFAAag2Q',
+        },
+        'Correlation filter (CF) based trackers have recently gained a lot of popularity due to their impressive performance on benchmark datasets, while maintaining high frame rates. A significant amount of recent research focuses on the incorporation of stronger features for a richer representation of the tracking target. However, this only helps to discriminate the target from background within a small neighborhood. In this paper, we present a framework that allows the explicit incorporation of global context within CF trackers. We reformulate the original optimization problem and provide a closed form solution for single and multi-dimensional features in the primal and dual domain. Extensive experiments demonstrate that this framework significantly improves the performance of many CF trackers with only a modest impact on frame rate.',
+        '1BQNfvagp6RcDkNxvrGlcR_XgZWAhjyso',
+    ),
+    Publication(
+        (1, 2017, 'CVPR'),
+        'SST: Single-Stream Temporal Action Proposals',
+        ('shyamal', 'victor', 'chuanqi', 'bernard', 'juan'),
+        (),
+        '1pQM7xTz42DsKEHvMUN7aiacytMz79Oax',
+        {
+            'Website': 'https://github.com/shyamal-b/sst/',
+        },
+        'Our paper presents a new approach for temporal detection of human actions in long, untrimmed video sequences. We introduce Single-Stream Temporal Action Proposals (SST), a new effective and efficient deep architecture for the generation of temporal action proposals. Our network can run continuously in a single stream over very long input video sequences, without the need to divide input into short overlapping clips or temporal windows for batch processing. We demonstrate empirically that our model outperforms the state-of-the-art on the task of temporal action proposal generation, while achieving some of the fastest processing speeds in the literature. Finally, we demonstrate that using SST proposals in conjunction with existing action classifiers results in state-of-the-art temporal action detection performance.',
+        '1AhIuJqmOnhzxzmh_1S2uBt6QYJiA5V28',
+    ),
+    Publication(
+        (3, 2017, 'ICCV'),
+        'High Order Tensor Formulation for Convolutional Sparse Coding',
+        ('adel', 'bernard'),
+        (),
+        '1P-Dj07W8GyKzoAlXgOXymFaK2zxa_Dlx',
+        {
+            'Website':
+                'http://adelbibi.com',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Tensor_CSC_supp.pdf',
+        },
+        'Convolutional sparse coding (CSC) has gained attention for its successful role as a reconstruction and a classification tool in the computer vision and machine learning community. Current CSC methods can only reconstruct singlefeature 2D images independently. However, learning multidimensional dictionaries and sparse codes for the reconstruction of multi-dimensional data is very important, as it examines correlations among all the data jointly. This provides more capacity for the learned dictionaries to better reconstruct data. In this paper, we propose a generic and novel formulation for the CSC problem that can handle an arbitrary order tensor of data. Backed with experimental results, our proposed formulation can not only tackle applications that are not possible with standard CSC solvers, including colored video reconstruction (5D--tensors), but it also performs favorably in reconstruction with much fewer parameters as compared to naive extensions of standard CSC to multiple features/channels.',
+        '1df5PsY2e3Fl5-4jGNOyzAasj7FMut5mc',
+    ),
+    Publication(
+        (2, 2017, 'ICCV'),
+        '2D-Driven 3D Object Detection in RGB-D Images',
+        ('jean', 'bernard'),
+        (),
+        '1BLXqeniZ3Jp8ODoqRg07x76kqOmTlS9V',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/2D-Driven%203D%20Object%20Detection%20in%20RGB-D%20Images_supp.pdf',
+        },
+        'In this paper, we present a technique that places 3D bounding boxes around objects in an RGB-D scene. Our approach makes best use of the 2D information to quickly reduce the search space in 3D, benefiting from state-of-the-art 2D object detection techniques. We then use the 3D information to orient, place, and score bounding boxes around objects. We independently estimate the orientation for every object, using previous techniques that utilize normal information. Object locations and sizes in 3D are learned using a multilayer perceptron (MLP). In the final step, we refine our detections based on object class relations within a scene. When compared to state-of-the-art detection methods that operate almost entirely in the sparse 3D domain, extensive experiments on the well-known SUN RGBD dataset [29] show that our proposed method is muchfaster (4.1s per image) in detecting 3D objects in RGB-D images and performs better (3 mAP higher) than the state-of-the-art method that is 4.7 times slower and comparably to the method that is two orders of magnitude slower. This work hints at the idea that 2D-driven object detection in 3D should be further explored, especially in cases where the 3D input is sparse.',
+        '1eVzwfVf15cDH7ClQub_TDiV2guUURAqQ',
+    ),
+    Publication(
+        (3, 2017, 'ICCV'),
+        'Constrained Convolutional Sparse Coding for Parametric Based Reconstruction Of Line Drawings',
+        ('sara', 'affara', 'bernard'),
+        (),
+        '1G9PKLW44AAI5-Mjp-vcHAlrFWUO-MxVq',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Constrained%20Convolutional%20Sparse%20Coding%20for%20Parametric%20Based%20Reconstruction_supp.zip',
+        },
+        'Convolutional sparse coding (CSC) plays an essential role in many computer vision applications ranging from image compression to deep learning. In this work, we spot the light on a new application where CSC can effectively serve, namely line drawing analysis. The process of drawing a line drawing can be approximated as the sparse spatial localization of a number of typical basic strokes, which in turn can be cast as a non-standard CSC model that considers the line drawing formation process from parametric curves. These curves are learned to optimize the fit between the model and a specific set of line drawings. Parametric representation of sketches is vital in enabling automatic sketch analysis, synthesis and manipulation. A couple of sketch manipulation examples are demonstrated in this work. Consequently, our novel method is expected to provide a reliable and automatic method for parametric sketch description. Through experiments, we empirically validate the convergence of our method to a feasible solution.',
+        '1zL0cWJYibp9h4J19dQQmDbFxmzBrxzIb',
+    ),
+    Publication(
+        (3, 2017, 'AAAI'),
+        'An Exact Penalty Method for Binary Optimization Based on MPEC Formulation',
+        ('ganzhao', 'bernard'),
+        (),
+        '1L5_ErOayykJnzgykgMpduxmyVPDOkgDc',
+        {
+            'Code':
+                'https://ivul.kaust.edu.sa/Documents/more/code/An%20Exact%20Penalty%20Method%20for%20Binary%20Optimization%20Based%20on%20MPEC%20Formulation.zip',
+        },
+        'Binary optimization is a central problem in mathematical optimization and its applications are abundant. To solve this problem, we propose a new class of continuous optimization techniques, which is based on Mathematical Programming with Equilibrium Constraints (MPECs). We first reformulate the binary program as an equivalent augmented biconvex optimization problem with a bilinear equality constraint, then we propose an exact penalty method to solve it. The resulting algorithm seeks a desirable solution to the original problem via solving a sequence of linear programming convex relaxation subproblems. In addition, we prove that the penalty function, induced by adding the complementarity constraint to the objective, is exact, i.e., it has the same local and global minima with those of the original binary program when the penalty parameter is over some threshold. The convergence of the algorithm can be guaranteed, since it essentially reduces to block coordinate descent in the literature. Finally, we demonstrate the effectiveness of our method on the problem of dense subgraph discovery. Extensive experiments show that our method outperforms existing techniques, such as iterative hard thresholding and linear programming relaxation.',
+        '1L4YOoCba_hvXCbWh3vo1eZnHaEIAdEqY',
+    ),
+    Publication(
+        (1, 2017, 'BMVC'),
+        'End-to-End, Single-Stream Temporal Action Detection in Untrimmed Videos (SS-TAD)',
+        ('shyamal', 'victor', 'bernard', 'li', 'juan'),
+        ('Oral',),
+        '18h2lT9ucA9SyD1CFmjHEuPrgMFReXT_X',
+        {
+            'Website': 'https://github.com/shyamal-b/ss-tad',
+            'Code': 'https://github.com/shyamal-b/ss-tad',
+        },
+        "In this work, we present a new intuitive, end-to-end approach for temporal action detection in untrimmed videos.  We introduce our new architecture for Single-Stream Temporal Action Detection (SS-TAD), which effectively integrates joint action detection with its semantic sub-tasks in a single unifying end-to-end framework. We develop a method for training our deep recurrent architecture based on enforcing semantic constraints on intermediate modules that are gradually relaxed as learning progresses. We find that such a dynamic learning scheme enables SS-TAD to achieve higher overall detection performance, with fewer training epochs. By design, our single-pass network is very efficient and can operate at 701 frames per second, while simultaneously outperforming the state-of-the-art methods for temporal action detection on THUMOS'14.",
+        '1iM5eoOY_VCiXC83kT5Ume6A2wx1ngzEK',
+    ),
+    Publication(
+        (3, 2017, 'EuroGraphics'),
+        'Stroke Style Transfer',
+        ('sara', 'bernard'),
+        ('Short Paper',),
+        '1oZ2WBlvt9eaAD15kTyT5awfZJcz9-OFU',
+        {},
+        'We propose a novel method to transfer sketch style at the stroke level from one free-hand line drawing to another, whereby thesedrawings can be from different artists. It aims to transfer the style of the input sketch at the stroke level to the style encountered in sketches by other artists. This is done by modifying all the parametric stroke segments in the input, so as to minimize a global stroke-level distance between the input and target styles. To do this, we exploit a recent work on stroke authorship recognition to define the stroke-level distance [SRG15], which is in turn minimized using conventional optimization tools. We showcase the quality of style transfer qualitatively by applying the proposed technique on several input-target combinations.',
+        '1uaTZHL9ukbwnVEXUW9_9XwJEkTQ83drf',
+    ),
+    Publication(
+        (3, 2016, 'CVPR'),
+        '3D Part-Based Sparse Tracker with Automatic Synchronization and Registration',
+        ('adel', 'tianzhu', 'bernard'),
+        (),
+        '1P4qbtdtxtC5Px6A_q4kG8bbVMEkqsAbV',
+        {
+            'Video': 'https://youtu.be/5YZEZseOYG4',
+        },
+        'In this paper, we present a part-based sparse tracker in a particle filter framework where both the motion and appearance model are formulated in 3D. The motion model is adaptive and directed according to a simple yet powerful occlusion handling paradigm, which is intrinsically fused in the motion model. Also, since 3D trackers are sensitive to synchronization and registration noise in the RGB and depth streams, we propose automated methods to solve these two issues. Extensive experiments are conducted on a popular RGBD tracking benchmark, which demonstrate that our tracker can achieve superior results, outperforming many other recent and state-of-the-art RGBD trackers.',
+        '1bQW2I4a1K5csV26rFGaiQQUtWfV175n8',
+    ),
+    Publication(
+        (1, 2016, 'CVPR'),
+        'Fast Temporal Activity Proposals for Efficient Detection of Human Actions in Untrimmed Videos',
+        ('fabian', 'juan', 'bernard'),
+        (),
+        '1DUgPNkvgpLpyG0zlv1pOnIkgivdt9nKL',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Fast%20Temporal%20Activity%20Proposals%20for%20Efficient%20Detection%20of%20Human%20Actions%20in%20Untrimmed%20Videos.pdf',
+            'Code':
+                'https://github.com/cabaf/sparseprop',
+        },
+        'In many large-scale video analysis scenarios, one is interested in localizing and recognizing human activities that occur in short temporal intervals within long untrimmed videos. Current approaches for activity detection still struggle to handle large-scale video collections and the task remains relatively unexplored. This is in part due to the computational complexity of current action recognition approaches and the lack of a method that proposes fewer intervals in the video, where activity processing can be focused. In this paper, we introduce a proposal method that aims to recover temporal segments containing actions in untrimmed videos. Building on techniques for learning sparse dictionaries, we introduce a learning framework to represent and retrieve activity proposals. We demonstrate the capabilities of our method in not only producing high quality proposals but also in its efficiency. Finally, we show the positive impact our method has on recognition performance when it is used for action detection, while running at 10FPS.',
+        '19ZGZ_GyKAuw8XFWFZZwZQsUrLbKe2NvP',
+    ),
+    Publication(
+        (2, 2016, 'CVPR'),
+        'In Defense of Sparse Tracking: Circulant Sparse Tracker',
+        ('tianzhu', 'adel', 'bernard'),
+        ('Spotlight',),
+        '1T9DGD2332msAJMeKuBNpZzlETlwTrkcO',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/In%20Defense%20of%20Sparse%20Tracking%20Circulant%20Sparse%20Tracker.pdf',
+            'Video':
+                'https://youtu.be/6yGEM2f_WZA',
+        },
+        'Sparse representation has been introduced to visual tracking by finding the best target candidate with minimal reconstruction error within the particle filter framework. However, most sparse representation based trackers have high computational cost, less than promising tracking performance, and limited feature representation. To deal with the above issues, we propose a novel circulant sparse tracker (CST), which exploits circulant target templates. Because of the circulant structure property, CST has the following advantages: (1) It can refine and reduce particles using circular shifts of target templates. (2) The optimization can be efficiently solved entirely in the Fourier domain. (3) High dimensional features can be embedded into CST to significantly improve tracking performance without sacrificing much computation time. Both qualitative and quantitative evaluations on challenging benchmark sequences demonstrate that CST performs better than all other sparse trackers and favorably against state-of-the-art methods.',
+        '17Dw3M6IfIiJHgV18pjOgjpJcXzu9EelB',
+    ),
+    Publication(
+        (2, 2016, 'ECCV'),
+        'Target Response Adaptation for Correlation Filter Tracking',
+        ('adel', 'matthias', 'bernard'),
+        ('Spotlight',),
+        '1AjmUhLofEWC_6guQD_EBj6uzvE4wkxQY',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Target%20Response%20Adaptation%20for%20Correlation%20Filter%20Tracking-supp.pdf',
+            'Code':
+                'https://github.com/adelbibi/Target-Response-Adaptation-for-Correlation-Filter-Tracking',
+            'Video':
+                'https://youtu.be/yZVY_Evxm3I',
+        },
+        'Most correlation filter (CF) based trackers utilize the circulant structure of the training data to learn a linear filter that best regresses this data to a hand-crafted target response. These circularly shifted patches are only approximations to actual translations in the image, which become unreliable in many realistic tracking scenarios including fast motion, occlusion, etc. In these cases, the traditional use of a single centered Gaussian as the target response impedes tracker performance and can lead to unrecoverable drift. To circumvent this major drawback, we propose a generic framework that can adaptively change the target response from frame to frame, so that the tracker is less sensitive to the cases where circular shifts do not reliably approximate translations. To do that, we reformulate the underlying optimization to solve for both the filter and target response jointly, where the latter is regularized by measurements made using actual translations. This joint problem has a closed form solution and thus allows for multiple templates, kernels, and multi-dimensional features. Extensive experiments on the popular OTB100 benchmark [19] show that our target adaptive framework can be combined with many CF trackers to realize significant overall performance improvement (ranging from 3%-13.5% in precision and 3.2%-13% in accuracy), especially in categories where this adaptation is necessary (e.g. fast motion, motion blur, etc.).',
+        '1Qbi9IZ-VdhZFWltZ4f33sJPYj7HOP8Jf',
+    ),
+    Publication(
+        (2, 2016, 'ECCV'),
+        'Large Scale Asset Extraction for Urban Images',
+        ('affara', 'liangliang', 'bernard', 'peter'),
+        (),
+        '1ZtBaAMxmQM8THpR5zx3-aGpN-VgukOl-',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Large%20Scale%20Asset%20Extraction%20for%20Urban%20Images-supp.pdf',
+            'Video':
+                'https://youtu.be/sc02tD35gi4',
+            'Code':
+                'https://github.com/lamaaffara/UrbanAssetExtraction',
+        },
+        'Object proposals are currently used for increasing the computational efficiency of object detection. We propose a novel adaptive pipeline for interleaving object proposals with object classification and use it as a formulation for asset detection. We first preprocess the images using a novel and efficient rectification technique. We then employ a particle filter approach to keep track of three priors, which guide proposed samples and get updated using classifier output. Tests performed on over 1000 urban images demonstrate that our rectification method is faster than existing methods without loss in quality, and that our interleaved proposal method outperforms current state-of-the-art. We further demonstrate that other methods can be improved by incorporating our interleaved proposals.',
+        '1ZjNEga2pArQ3tmLyIqUJuobW4rcJv4bg',
+    ),
+    Publication(
+        (2, 2016, 'ECCV'),
+        'A Benchmark and Simulator for UAV Tracking',
+        ('matthias', 'neil', 'bernard'),
+        (),
+        '1YDlCOWxH8HMPlmblJ2OvxFdSFecuiM3Z',
+        {
+            'Website':
+                'http://matthias.pw/',
+            'Data':
+                'https://ivul.kaust.edu.sa/Pages/Dataset-UAV123.aspx',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/A%20Benchmark%20and%20Simulator%20for%20UAV%20Tracking%20-%20Supplementary%20Material.pdf',
+        },
+        'In this paper, we propose a new aerial video dataset and benchmark for low altitude UAV target tracking, as well as, a photorealistic UAV simulator that can be coupled with tracking methods. Our benchmark provides the first evaluation of many state-of-the-art and popular trackers on 123 new and fully annotated HD video sequences captured from a low-altitude aerial perspective. Among the compared trackers, we determine which ones are the most suitable for UAV tracking both in terms of tracking accuracy and run-time. The simulator can be used to evaluate tracking algorithms in real-time scenarios before they are deployed on a UAV in the field", as well as, generate synthetic but photo-realistic tracking datasets with automatic ground truth annotations to easily extend existing real-world datasets. Both the benchmark and simulator are made publicly available to the vision community on our website to further research in the area of object tracking from UAVs.',
+        '1GeX5Jkxi9oGnlWvVCL3B3WAfu5k3ZqJi',
+    ),
+    Publication(
+        (1, 2016, 'ECCV'),
+        'DAPs: Deep Action Proposals for Action Understanding',
+        ('victor', 'fabian', 'juan', 'bernard'),
+        (),
+        '1I36Gj1mbjMEp4XYbN3Cr3PZAxI6z52r-',
+        {
+            'Code': 'https://github.com/escorciav/daps',
+        },
+        'Object proposals have contributed significantly to recent advances in object understanding in images. Inspired by the success of this approach, we introduce Deep Action Proposals (DAPs), an effective and efficient algorithm for generating temporal action proposals from long videos. We show how to take advantage of the vast capacity of deep learning models and memory cells to retrieve from untrimmed videos temporal segments, which are likely to contain actions. A comprehensive evaluation indicates that our approach outperforms previous work on a large scale action benchmark, runs at 134 FPS making it practical for large-scale scenarios, and exhibits an appealing ability to generalize, i.e. to retrieve good quality temporal proposals of actions unseen in training.',
+        '1OWPmF7naJbQYt6F95xJ8DadLXuSKf4dN',
+    ),
+    Publication(
+        (3, 2016, 'AAAI'),
+        'Constrained Submodular Minimization for Missing Labels and Class Imbalance in Multi-label Learning',
+        ('baoyuan', 'siwei', 'bernard'),
+        (),
+        '1qXnMaFNfj8_L4ZfPT8fYzjF2zFNC1Oms',
+        {
+            'Code':
+                'https://sites.google.com/site/baoyuanwu2015/demo-MMIB-AAAI2016-BYWU.zip?attredirects=0&d=1',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Constrained%20Submodular%20Minimization%20Towards%20Missing%20Labels.pdf',
+        },
+        'In multi-label learning, there are two main challenges: missing labels and class imbalance (CIB). The former assumes that only a partial set of labels are provided for each training instance while other labels are missing. CIB is observed from two perspectives: first, the number of negative labels of each instance is much larger than its positive labels; second, the rate of positive instances (i.e. the number of positive instances divided by the total number of instances) of different classes are significantly different. Both missing labels and CIB lead to significant performance degradation. In this work, we propose a new method to handle these two challenges simultaneously. We formulate the problem as a constrained submodular minimization that is composed of a submodular objective function that encourages label consistency and smoothness, as well as, class cardinality bound constraints to handle class imbalance. We further present a convex approximation based on the Lovasz extension of submodular functions, leading to a linear program, which can be efficiently solved by the alternative direction method of multipliers (ADMM). Experimental results on several benchmark datasets demonstrate the improved performance of our method over several state-of-the-art methods.',
+        '1EcYIb1Zh_fjTDI6bh3oc4YYfaC2kGDgN',
+    ),
+    Publication(
+        (3, 2016, 'AAAI'),
+        'A Proximal Alternating Direction Method for Semi-Definite Rank Minimization',
+        ('ganzhao', 'bernard'),
+        (),
+        '1SfnWLfzlvXar7zVXZ4MLSjCic7XD3kiQ',
+        {
+            'Code':
+                'https://ivul.kaust.edu.sa/Documents/more/code/A%20Proximal%20Alternating%20Direction%20Method%20for%20Semi-Definite%20Rank%20Minimization.rar',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/A%20Proximal%20Alternating%20Direction%20Method%20for%20Semi-Definite%20Rank%20Minimization.pdf',
+        },
+        'Semi-definite rank minimization problems model a wide range of applications in both signal processing and machine learning fields. This class of problem is NP-hard in general. In this paper, we propose a proximal Alternating Direction Method (ADM) for the well-known semi-definite rank regularized minimization problem. Specifically, we first reformulate this NP-hard problem as an equivalent biconvex MPEC (Mathematical Program with Equilibrium Constraints), and then solve it using proximal ADM, which involves solving a sequence of structured convex semi-definite subproblems to find a desirable solution to the original rank regularized optimization problem. Moreover, based on the KurdykaŁojasiewicz inequality, we prove that the proposed method always converges to a KKT stationary point under mild conditions. We apply the proposed method to the widely studied and popular sensor network localization problem. Our extensive experiments demonstrate that the proposed algorithm outperforms state-of-the-art low-rank semi-definite minimization algorithms in terms of solution quality.',
+        '1Vr-UfsjicGxbR3t95EGZ9GEa4KPa-nHA',
+    ),
+    Publication(
+        (3, 2016, 'PatternRecognition'),
+        'Facial Action Unit Recognition under Incomplete Data Based on Multi-label Learning with Missing Labels',
+        ('yongqiangli', 'baoyuan', 'bernard', 'yongping', 'hongxun', 'qiang'),
+        (),
+        '1CL7DkhialcpK-lQ64AZ24DbUAqICXw1D',
+        {},
+        'Facial action unit (AU) recognition has been applied in a wild range of fields, and has attracted great attention in the past two decades. Most existing works on AU recognition assumed that the complete label assignment for each training image is available, which is often not the case in practice. Labeling AU is expensive and time consuming process. Moreover, due to the AU ambiguity and subjective difference, some AUs are difficult to label reliably and confidently. Many AU recognition works try to train the classifier for each AU independently, which is of high computation cost and ignores the dependency among different AUs. In this work, we formulate AU recognition under incomplete data as a multi-label learning with missing labels (MLML) problem. Most existing MLML methods usually employ the same features for all classes. However, we find this setting is unreasonable in AU recognition, as the occurrence of different AUs produce changes of skin surface displacement or face appearance in different face regions. If using the shared features for all AUs, much noise will be involved due to the occurrence of other AUs. Consequently, the changes of the specific AUs cannot be clearly highlighted, leading to the performance degradation. Instead, we propose to extract the most discriminative features for each AU individually, which are learned by the supervised learning method. The learned features are further embedded into the instance-level label smoothness term of our model, which also includes the label consistency and the class-level label smoothness. Both a global solution using st-cut and an approximated solution using conjugate gradient (CG) descent are provided. Experiments on both posed and spontaneous facial expression databases demonstrate the superiority of the proposed method in comparison with several state-of-the-art works.',
+        '1AM6alAuWtv7kzkxyxfLRP8vGW3QdgXt2',
+    ),
+    Publication(
+        (2, 2016, 'IROS'),
+        'Persistent Aerial Tracking System for UAVs',
+        ('matthias', 'gopal', 'neil', 'bernard'),
+        (),
+        '1R4KtSVjQee8t8FqdnVr_6aK1SA4P4kBQ',
+        {
+            'Website': 'http://matthias.pw/',
+            'Video': 'https://youtu.be/_vR81qJxnNQ',
+        },
+        'In this paper, we propose a persistent, robust and autonomous object tracking system for unmanned aerial vehicles (UAVs) called Persistent Aerial Tracking (PAT). A computer vision and control strategy is applied to a diverse set of moving objects (e.g. humans, animals, cars, boats, etc.) integrating multiple UAVs with a stabilized RGB camera. A novel strategy is employed to successfully track objects over a long period, by ’handing over the camera’ from one UAV to another. We evaluate several state-of-the-art trackers on the VIVID aerial video dataset and additional sequences that are specifically tailored to low altitude UAV target tracking. Based on the evaluation, we select the leading tracker and improve upon it by optimizing for both speed and performance, integrate the complete system into an off-the-shelf UAV, and obtain promising results showing the robustness of our solution in real-world aerial scenarios.',
+        '1vsPALrtV2ZElDeG5wPmKQlKlkZZ8kBKO',
+    ),
+    Publication(
+        (2, 2015, 'CVPR'),
+        'Robust Manhattan Frame Estimation from a Single RGB-D Image',
+        ('bernard', 'ali', 'juan', 'fabian'),
+        (),
+        '1QA5lYGHPzpVvEmX4eBtd50zEUxGfOECr',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/MFE-supp.pdf',
+            'Video':
+                'https://ivul.kaust.edu.sa/Documents/more/video/MFE-video.mp4',
+            'Code':
+                'https://ivul.kaust.edu.sa/Documents/more/code/MFE.zip',
+            'Data':
+                'https://ivul.kaust.edu.sa/Documents/Data/Robust%20Manhattan%20Frame%20Estimation%20from%20a%20Single%20RGB-D%20Image.zip',
+        },
+        'This paper proposes a new framework for estimating the Manhattan Frame (MF) of an indoor scene from a single RGB-D image. Our technique formulates this problem as the estimation of a rotation matrix that best aligns the normals of the captured scene to a canonical world axes. By introducing sparsity constraints, our method can simultaneously estimate the scene MF, the surfaces in the scene that are best aligned to one of three coordinate axes, and the outlier surfaces that do not align with any of the axes. To test our approach, we contribute a new set of annotations to determine ground truth MFs in each image of the popular NYUv2 dataset. We use this new benchmark to experimentally demonstrate that our method is more accurate, faster, more reliable and more robust than the methods used in the literature. We further motivate our technique by showing how it can be used to address the RGB-D SLAM problem in indoor scenes by incorporating it into and improving the performance of a popular RGB-D SLAM method.',
+        '1Cp4GABrmisjYqbz16HXQ8doWEcpxksG8',
+    ),
+    Publication(
+        (1, 2015, 'CVPR'),
+        'ActivityNet: A Large-Scale Video Benchmark for Human Activity Understanding',
+        ('fabian', 'victor', 'bernard', 'juan'),
+        (),
+        '14ZYbhAldrL-bWpV7Y7J36eyL5sXmvVnk',
+        {
+            'Website':
+                'http://activity-net.org/',
+            'Data':
+                'https://cemse.kaust.edu.sa/ivul/activity-net',
+            'More':
+                'https://dl.dropboxusercontent.com/u/18955644/website_files/2015/ActivityNet_CVPR2015_supp_material.zip',
+        },
+        'In spite of many dataset efforts for human action recognition, current computer vision algorithms are still severely limited in terms of the variability and complexity of the actions that they can recognize. This is in part due to the simplicity of current benchmarks, which mostly focus on simple actions and movements occurring on manually trimmed videos. In this paper we introduce ActivityNet, a new largescale video benchmark for human activity understanding. Our benchmark aims at covering a wide range of complex human activities that are of interest to people in their daily living. In its current version, ActivityNet provides samples from 203 activity classes with an average of 137 untrimmed videos per class and 1.41 activity instances per video, for a total of 849 video hours. We illustrate three scenarios in which ActivityNet can be used to compare algorithms for human activity understanding: untrimmed video classification, trimmed activity classification and activity detection.',
+        '1PUSxHYFdHLdwQbtnpCDRUFN5xVWUuMAx',
+    ),
+    Publication(
+        (3, 2015, 'CVPR'),
+        'L0TV: A New Method for Image Restoration in the Presence of Impulse Noise',
+        ('ganzhao', 'bernard'),
+        ('Oral',),
+        '1AtIKusQDMvKdfJ72YRD12FHqdUtxFNvl',
+        {
+            'More':
+                'https://dl.dropboxusercontent.com/u/18955644/website_files/L0TV_CVPR2015_supp_material.pdf',
+            'Code':
+                'http://yuanganzhao.weebly.com/uploads/1/0/7/5/10759809/l0tv.zip',
+            'Slides':
+                'http://yuanganzhao.weebly.com/uploads/1/0/7/5/10759809/slide-l0tv.pdf',
+        },
+        'Total Variation (TV) is an effective and popular prior model in the field of regularization-based image processing. This paper focuses on TV for image restoration in the presence of impulse noise. This type of noise frequently arises in data acquisition and transmission due to many reasons, e.g. a faulty sensor or analog-to-digital converter errors. Removing this noise is an important task in image restoration. State-of-the-art methods such as Adaptive Outlier Pursuit(AOP), which is based on TV with L02-norm data fidelity, only give sub-optimal performance.In this paper, we propose a new method, called L0T V -PADMM, which solves the TV-based restoration problem with L0-norm data fidelity. To effectively deal with the resulting non-convex nonsmooth optimization problem, we first reformulate it as an equivalent MPEC (Mathematical Program with Equilibrium Constraints), and then solve it using a proximal Alternating Direction Method of Multipliers (PADMM). Our L0TV-PADMM method finds a desirable solution to the original L0-norm optimization problem and is proven to be convergent under mild conditions. We apply L0TV-PADMM to the problems of image denoising and deblurring in the presence of impulse noise. Our extensive experiments demonstrate that L0TV-PADMM outperforms state-of-the-art image restoration methods.',
+        '1RV4EKdO2wXMRNkD1_ZIng7ZWb0jg0EBy',
+    ),
+    Publication(
+        (2, 2015, 'CVPR'),
+        'Structural Sparse Tracking',
+        ('tianzhu', 'si', 'changsheng', 'shuicheng', 'bernard', 'narendra',
+         'ming'),
+        (),
+        '1FW0FVKUkkQlx-ivpew4YL1GcK1psfm-h',
+        {},
+        'Sparse representation has been applied to visual tracking by finding the best target candidate with minimal reconstruction error by use of target templates. However, most sparse representation based trackers only consider holistic or local representations and do not make full use of the intrinsic structure among and inside target candidates, thereby making the representation less effective when similar objects appear or under occlusion. In this paper, we propose a novel Structural Sparse Tracking (SST) algorithm, which not only exploits the intrinsic relationship among target candidates and their local patches to learn their sparse representations jointly, but also preserves the spatial layout structure among the local patches inside each target candidate. We show that our SST algorithm accommodates most existing sparse trackers with the respective merits. Both qualitative and quantitative evaluations on challenging benchmark image sequences demonstrate that the proposed SST algorithm performs favorably against several state-of-the-art methods.',
+        '1HZgjm7BCRIa4K33nkKWsBZYsmeNAje_G',
+    ),
+    Publication(
+        (1, 2015, 'CVPR'),
+        'On the Relationship between Visual Attributes and Convolutional Networks',
+        ('victor', 'juan', 'bernard'),
+        (),
+        '1nRtaHISp0aTJQYtYP1j4MmDWalXoxl85',
+        {
+            'More':
+                'https://dl.dropboxusercontent.com/u/18955644/website_files/0052-supp.zip',
+        },
+        'One of the cornerstone principles of deep models is their abstraction capacity, i.e. their ability to learn abstract concepts from ‘simpler’ ones. Through extensive experiments, we characterize the nature of the relationship between abstract concepts (specifically objects in images) learned by popular and high performing convolutional networks (conv-nets) and established mid-level representations used in computer vision (specifically semantic visual attributes). We focus on attributes due to their impact on several applications, such as object description, retrieval and mining, and active (and zero-shot) learning. Among the findings we uncover, we show empirical evidence of the existence of Attribute Centric Nodes (ACNs) within a conv-net, which is trained to recognize objects (not attributes) in images. These special conv-net nodes (1) collectively encode information pertinent to visual attribute representation and discrimination, (2) are unevenly and sparsely distribution across all layers of the conv-net, and (3) play an important role in conv-net based object recognition.',
+        '1qtqoI5MoANTVmB6gtqOw4Ab4U8fMQJ26',
+    ),
+    Publication(
+        (3, 2015, 'ICCV'),
+        'ML-MG: Multi-label Learning with Missing Labels Using a Mixed Graph',
+        ('baoyuan', 'siwei', 'bernard'),
+        (),
+        '1DU1lBeYZMkxhbQGm7yUvH7nCTQATQ0Tw',
+        {
+            'Code':
+                'https://ivul.kaust.edu.sa/Documents/more/code/ML-MG%20Multi-label%20Learning%20with%20Missing%20Labels%20Using%20a%20Mixed%20Graph.zip',
+        },
+        'This work focuses on the problem of multi-label learning with missing labels (MLML), which aims to label each test instance with multiple class labels given training instances that have an incomplete/partial set of these labels (i.e. some of their labels are missing). To handle missing labels, we propose a unified model of label dependencies by constructing a mixed graph, which jointly incorporates (i) instance-level similarity and class co-occurrence as undirected edges and (ii) semantic label hierarchy as directed edges. Unlike most MLML methods, We formulate this learning problem transductively as a convex quadratic matrix optimization problem that encourages training label consistency and encodes both types of label dependencies (i.e. undirected and directed edges) using quadratic terms and hard linear constraints. The alternating direction method of multipliers (ADMM) can be used to exactly and efficiently solve this problem. To evaluate our proposed method, we consider two popular applications (image and video annotation), where the label hierarchy can be derived from Wordnet. Experimental results show that our method leads to a significant improvement in performance and robustness to missing labels over the state-of-the-art methods.',
+        '1_EUnXXFEfoD7H5xznWgiWTUYDXgLWRGH',
+    ),
+    Publication(
+        (2, 2015, 'ICCV'),
+        'Intrinsic Scene Decomposition from RGB-D images',
+        ('hachama', 'bernard', 'peter'),
+        (),
+        '1ZPUlX18ugklzFXJ6XaeeomTdPjzf0qWu',
+        {
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Intrinsic%20Scene%20Decomposition%20from%20RGB-D%20images.pdf',
+            'Video':
+                'https://ivul.kaust.edu.sa/Documents/more/video/Intrinsic%20Scene%20Decomposition%20from%20RGB-D%20images.mp4',
+        },
+        'In this paper, we address the problem of computing an intrinsic decomposition of the colors of a surface into an albedo and a shading term. The surface is reconstructed from a single or multiple RGB-D images of a static scene obtained from different views. We thereby extend and improve existing works in the area of intrinsic image decomposition. In a variational framework, we formulate the problem as a minimization of an energy composed of two terms: a data term and a regularity term. The first term is related to the image formation process and expresses the relation between the albedo, the surface normals, and the incident illumination. We use an affine shading model, a combination of a Lambertian model, and an ambient lighting term. This model is relevant for Lambertian surfaces. When available, multiple views can be used to handle view-dependent non- Lambertian reflections. The second term contains an efficient combination of l2 and l1-regularizers on the illumination vector field and albedo respectively. Unlike most previous approaches, especially Retinex-like techniques, these terms do not depend on the image gradient or texture, thus reducing the mixing shading/reflectance artifacts and leading to better results. The obtained non-linear optimization problem is efficiently solved using a cyclic block coordinate descent algorithm. Our method outperforms a range of state-of-the-art algorithms on a popular benchmark datase',
+        '190eJi8LIwR4eXe3Gm8srZBLtJS2NkEBu',
+    ),
+    Publication(
+        (3, 2015, 'ICCV'),
+        'What makes an object memorable?',
+        ('rachit', 'joshua', 'aditya', 'ming', 'bernard'),
+        (),
+        '1IqZ0ItUIn6HHUA1f8yN2CVa4F-IBUuvt',
+        {
+            'Website':
+                'http://socrates.berkeley.edu/~plab/object-memorability/',
+            'Data':
+                'http://socrates.berkeley.edu/~plab/object-memorability/data/object-memorability-data-2015.zip',
+        },
+        'Recent studies on image memorability have shed light on what distinguishes the memorability of different images and the intrinsic and extrinsic properties that make those images memorable. However, a clear understanding of the memorability of specific objects inside an image remains elusive. In this paper, we provide the first attempt to answer the question: what exactly is remembered about an image? We augment both the images and object segmentations from the PASCAL-S dataset with ground truth memorability scores and shed light on the various factors and properties that make an object memorable (or forgettable) to humans. We analyze various visual factors that may influence object memorability (e.g. color, visual saliency, and object categories). We also study the correlation between object and image memorability and find that image memorability is greatly affected by the memorability of its most memorable object. Lastly, we explore the effectiveness of deep learning and other computational approaches in predicting object memorability in images. Our efforts offer a deeper understanding of memorability in general thereby opening up avenues for a wide variety of applications.',
+        '1kZY3LJZCNKDo4tbhjZn4nXk0NEuHxe6K',
+    ),
+    Publication(
+        (3, 2015, 'ICCVW'),
+        'Multi-Template Scale-Adaptive Kernelized Correlation Filters',
+        ('adel', 'bernard'),
+        (),
+        '1-4vlaeL9hEA0dm3Obgpeen2VCx4LwJNO',
+        {
+            'Code':
+                'https://github.com/adelbibi/Multi-Template-Scale-Adaptive-Kernelized-Correlation-Filters',
+            'More':
+                'https://ivul.kaust.edu.sa/Documents/more/supplementary/Multi-Template-Scale-Adaptive-Kernelized-Correlation-Filters.pdf',
+        },
+        'This paper identifies the major drawbacks of a very computationally efficient and state-of- the-art-tracker known as the Kernelized Correlation Filter (KCF) tracker. These drawbacks include an assumed fixed scale of the target in every frame, as well as, a heuristic update strategy of the filter taps to incorporate historical tracking information (i.e. simple linear combination of taps from the previous frame). In our approach, we update the scale of the tracker by maximizing over the posterior distribution of a grid of scales. As for the filter update, we prove and show that it is possible to use all previous training examples to update the filter taps very efficiently using fixed-point optimization. We validate the efficacy of our approach on two tracking datasets, VOT2014 and VOT2015.',
+        '1-Pf3XnvcI1ujVp-YUZTCUynGbsM-sNW-',
+    ),
+    Publication(
+        (1, 2015, 'WACV'),
+        'Action Recognition using Discriminative Structured Trajectory Groups',
+        ('indriyati', 'narendra', 'bernard'),
+        (),
+        '1mkyOFvJPysX0N7BoWPG4kxeAo_7ahGzb',
+        {},
+        'In this paper, we develop a novel framework for action recognition in videos. The framework is based on automatically learning the discriminative trajectory groups that are relevant to an action. Different from previous approaches, our method does not require complex computationfor graph matching or complex latent models to localize the parts. We model a video as a structured bag of trajectory groups with latent class variables. We model action recognition problem in a weakly supervised setting and learn discriminative trajectory groups by employing multiple instance learning (MIL) based Support Vector Machine (SVM) using pre-computed kernels. The kernels depend on the spatio-temporal relationship between the extracted trajectory groups and their associated features. We demonstrate both quantitatively and qualitatively that the classifi- cation performance of our proposed method is superior to baselines and several state-of-the-art approaches on three challenging standard benchmark datasets.',
+        '1vUo1BvycNbN_xlrzz8Yuqk_6MNUBETjI',
+    ),
+    Publication(
+        (3, 2015, 'EuroGraphics'),
+        'Designing Camera Networks by Convex Quadratic Programming',
+        ('bernard', 'yuanhao', 'peter'),
+        (),
+        '1vPATbgaTSp1h4LyNEmLXgHZdbPaLUWTX',
+        {
+            'Video': 'https://youtu.be/BOE52ivrQwk',
+        },
+        'In this paper, we study the problem of automatic camera placement for computer graphics and computer vision applications. We extend the problem formulations of previous work by proposing a novel way to incorporate visibility constraints and camera-to-camera relationships. For example, the placement solution can be encouraged to have cameras that image the same important locations from different viewing directions, which can enable reconstruction and surveillance tasks to perform better. We show that the general camera placement problem canbe formulated mathematically as a convex binary quadratic program (BQP) under linear constraints. Moreover, we propose an optimization strategy with a favorable trade-off between speed and solution quality. Our solution is almost as fast as a greedy treatment of the problem, but the quality is significantly higher, so much so that it is comparable to exact solutions that take orders of magnitude more computation time. Because it is computationally attractive, our method also allows users to explore the space of solutions for variations in input parameters. To evaluate its effectiveness, we show a range of 3D results on real-world floorplans (garage, hotel, mall, and airport).',
+        '14UzxogR3V8qLksmUY7lg3_akXGOksr01',
+    ),
+    Publication(
+        (3, 2015, 'EuroGraphics'),
+        'Template Assembly for Detailed Urban Reconstruction',
+        ('liangliang', 'caigui', 'bernard', 'peter'),
+        (),
+        '1tQlaoSz-PHcfk7z4WsjbgdymaGSWUJjy',
+        {
+            'Website':
+                'https://www.semanticscholar.org/paper/Template-Assembly-for-Detailed-Urban-Reconstruction-Nan-Jiang/211b995bfe6f86d9d4ffd0d7d241b099d11084b5',
+        },
+        'We propose a new framework to reconstruct building details by automatically assembling 3D templates on coarse textured building models. In a preprocessing step, we generate an initial coarse model to approximate a point cloud computed using Structure from Motion and Multi View Stereo, and we model a set of 3D templates of facade details. Next, we optimize the initial coarse model to enforce consistency between geometry and appearance (texture images). Then, building details are reconstructed by assembling templates on the textured faces of the coarse model. The 3D templates are automatically chosen and located by our optimization-based template assembly algorithm that balances image matching and structural regularity. In the results, we demonstrate how our framework can enrich the details of coarse models using various data sets.',
+        '19tG2wvZkLk76CLHe8bQg1zs3yHFj8FfE',
+    ),
+    Publication(
+        (3, 2015, 'EuroGraphics'),
+        'SAR: Stroke Authorship Recognition',
+        ('sara', 'alyn', 'bernard'),
+        (),
+        '1MLwSpr3xB7VdUAJa5U0NnPjvDmn7Kw4x',
+        {
+            'Data': 'https://cemse.kaust.edu.sa/ivul/sar-dataset',
+        },
+        'Are simple strokes unique to the artist or designer who renders them? If so, can this idea be used to identify authorship or to classify artistic drawings? Also, could training methods be devised to develop particular styles? To answer these questions, we propose the Stroke Authorship Recognition (SAR) approach, a novel method that distinguishes the authorship of 2D digitized drawings. SAR converts a drawing into a histogram of stroke attributes that is discriminative of authorship. We provide extensive classification experiments on a large variety of data sets, which validate SAR’s ability to distinguish unique authorship of artists and designers. We also demonstrate the usefulness of SAR in several applications including the detection of fraudulent sketches, the training and monitoring of artists in learning a particular new style and the first quantitative way to measure the quality of automatic sketch synthesis tools.',
+        '1fs6t6mP9puVpujbKPGWHpVC87oqVzIpp',
+    ),
+    Publication(
+        (2, 2015, 'Cybernetics'),
+        'Robust Visual Tracking via Exclusive Context Modeling',
+        ('tianzhu', 'bernard', 'si', 'changsheng', 'narendra'),
+        (),
+        '1maUs6oPctHLD_-lIqvB9P5gmEhQTdw6B',
+        {},
+        'In this paper, we formulate particle filter-based object tracking as an exclusive sparse learning problem that exploits contextual information. To achieve this goal, we propose the context-aware exclusive sparse tracker (CEST) to model particle appearances as linear combinations of dictionary templates that are updated dynamically. Learning the representation of each particle is formulated as an exclusive sparse representation problem, where the overall dictionary is composed of multiple group dictionaries that can contain contextual information. With context, CEST is less prone to tracker drift. Interestingly, we show that the popular L1 tracker [1] is a special case of our CEST formulation. The proposed learning problem is efficiently solved using an accelerated proximal gradient method that yields a sequence of closed form updates. To make the tracker much faster, we reduce the number of learning problems to be solved by using the dual problem to quickly and systematically rank and prune particles in each frame. We test our CEST tracker on challenging benchmark sequences that involve heavy occlusion, drastic illumination changes, and large pose variations. Experimental results show that CEST consistently outperforms state-of-the-art trackers.',
+        '11KjEP99o589F4AQitv01t5KymBSzRuc4',
+    ),
+    Publication(
+        (2, 2014, 'IJCV'),
+        'Robust Visual Tracking Via Consistent Low-Rank Sparse Learning',
+        ('tianzhu', 'si', 'narendra', 'ming', 'bernard'),
+        (),
+        '1UXMh9DvAxqCTK8eyHaBx4fW3hr8KUUF4',
+        {},
+        'Object tracking is the process of determining the states of a target in consecutive video frames based on properties of motion and appearance consistency. In this paper, we propose a consistent low-rank sparse tracker (CLRST) that builds upon the particle filter framework for tracking. By exploiting temporal consistency, the proposed CLRST algorithm adaptively prunes and selects candidate particles. By using linear sparse combinations of dictionary templates, the proposed method learns the sparse representations of image regions corresponding to candidate particles jointly by exploiting the underlying low-rank constraints. In addition, the proposed CLRST algorithm is computationally attractive since temporal consistency property helps prune particles and the low-rank minimization problem for learning joint sparse representations can be efficiently solved by a sequence of closed form update operations. We evaluate the proposed CLRST algorithm against 14 state-of-the-art tracking methods on a set of 25 challenging image sequences. Experimental results show that the CLRST algorithm performs favorably against state-of-the-art tracking methods in terms of accuracy and execution time.',
+        '1K_J2S3r4O9CzHGin_L8cuEK0aLaBvwpJ',
+    ),
+    Publication(
+        (1, 2014, 'ACCV'),
+        'Improving Head And Body Pose Estimation Through Semi-Supervised Manifold Alignment',
+        ('alexandre', 'jagannadan', 'bernard', 'narendra', 'jeanmarc'),
+        (),
+        '1P5NsvzYHEYHnhCILnQ8tyt_dWedNEz0B',
+        {},
+        'In this paper, we explore the use of a semi-supervised manifold alignment method for domain adaptation in the context of human body and head pose estimation in videos. We build upon an existing state-of-the-art system that leverages on external labelled datasets for the body and head features, and on the unlabeled test data with weak velocity labels to do a coupled estimation of the body and head pose. While this previous approach showed promising results, the learning of the underlying manifold structure of the features in the train and target data and the need to align them were not explored despite the fact that the pose features between two datasets may vary according to the scene, e.g. due to different camera point of view or perspective. In this paper, we propose to use a semi-supervised manifold alignment method to bring the train and target samples closer within the resulting embedded space. To this end, we consider an adaptation set from the target data and rely on (weak) labels, given for example by the velocity direction whenever they are reliable. These labels, along with the training labels are used to bias the manifold distance within each manifold and to establish correspondences for alignment.',
+        '17zqG6Va-QoiPRQfobydlHUFGBncGyOvm',
+    ),
+    Publication(
+        (2, 2014, 'ACCV'),
+        '3D Aware Correction and Completion of Depth Maps in Piecewise Planar Scenes',
+        ('ali', 'jean', 'daniel', 'bernard'),
+        (),
+        '1dNY5uvr7g2oCuKoCUXlKU0mA15MXnucM',
+        {},
+        'This paper describes a framework for recognizing human actions in videos by incorporating a new set of visual cues that represent the context of the action. We develop a weak foreground-background segmentation approach in order to robustly extract not only foreground features that are focused on the actors, but also global camera motion and contextual scene information. Using dense point trajectories, our approach separates and describes the foreground motion from the background, represents the appearance of the extracted static background, and encodes the global camera motion that interestingly is shown to be discriminative for certain action classes. Our experiments on four challenging benchmarks (HMDB51, Hollywood2, Olympic Sports, and UCF50) show that our contextual features enable a significant performance improvement over state-of-the-art algorithms.',
+        '1sNVnIqs7YW4Wpdogb110LQ5Rcd2uvIH5',
+    ),
+    Publication(
+        (1, 2014, 'ACCV'),
+        'Camera Motion and Surrounding Scene Appearance as Context for Action Recognition',
+        ('fabian', 'ali', 'juan', 'bernard'),
+        (),
+        '1sihKksW5opuFAINS2-7K2LBBia0Gb08f',
+        {},
+        'Abstract. RGB-D sensors are popular in the computer vision community, especially for problems of scene understanding, semantic scene labeling, and segmentation. However, most of these methods depend on reliable input depth measurements. The reliability of these depth values deteriorates significantly with distance. In practice, unreliable depth measurements are discarded, thus, limiting the performance of methods that use RGB-D data. This paper studies how reliable depth values can be used to correct the unreliable ones, and how to complete (or extend) the available depth data beyond the raw measurements of the sensor (i.e. infer depth at pixels with unknown depth values), given a prior model on the 3D scene. We consider piecewise planar environments in this paper, since many indoor scenes with man-made objects can be modeled as such. We propose a framework that uses the RGB-D sensor’s noise profile to adaptively and robustly fit plane segments (e.g. floor and ceiling) and iteratively complete the depth map, when possible. Depth completion is formulated as a discrete labeling problem (MRF) with hard constraints and solved efficiently using graph cuts. To regularize this problem, we exploit 3D and appearance cues that encourage pixels to take on depth values that will be compatible in 3D to the piecewise planar assumption. Extensive experiments, on a new large-scale and challenging dataset, show that our approach results in more accurate depth maps (with 20% more depth values) than those recorded by the RGB-D sensor. Additional experiments on the NYUv2 dataset show that our method generates more 3D aware depth. These generated depth maps can also be used to improve the performance of a state-of-the-art RGB-D SLAM method.',
+        '1WR_YeQkYtO06gHu7k9LUcDvEOF4JdN2v',
+    ),
+    Publication(
+        (3, 2014, 'ACCV'),
+        'Improving Saliency Models by Predicting Human Fixation Patches',
+        ('rachit', 'akshat', 'bernard'),
+        (),
+        '1IC0w58Qe2RlABr-e4wbF9-BPQb-5Wv-s',
+        {},
+        'There is growing interest in studying the Human Visual System (HVS) to supplement and improve the performance of computer vision tasks. A major challenge for current visual saliency models is predicting saliency in cluttered scenes (i.e. high false positive rate). In this paper, we propose a fixation patch detector that predicts image patches that contain human fixations with high probability. Our proposed model detects sparse fixation patches with an accuracy of 84% and eliminates non-fixation patches with an accuracy of 84% demonstrating that lowlevel image features can indeed be used to short-list and identify human fixation patches. We then show how these detected fixation patches can be used as saliency priors for popular saliency models, thus, reducing false positives while maintaining true positives. Extensive experimental results show that our proposed approach allows state-of-the-art saliency methods to achieve better prediction performance on benchmark datasets.',
+        '1whzdguQApivG5EdMHhnmJwtm_MFP4SKQ',
+    ),
+    Publication(
+        (2, 2013, 'IJCV'),
+        'Robust Visual Tracking via Structured Multi-Task Sparse Learning',
+        ('tianzhu', 'bernard', 'si', 'narendra'),
+        (),
+        '1QJgr-nEavVJeY6soN52upB-3vnrimH6a',
+        {},
+        'In this paper, we formulate object tracking in a particle filter framework as a structured multi-task sparse learning problem, which we denote as Structured Multi-Task Tracking (S-MTT). Since we model particles as linear combinations of dictionary templates that are updated dynamically, learning the representation of each particle is considered a single task in Multi-Task Tracking (MTT). By employing popularsparsity-inducinglp,q mixednorms(specificallyp ∈ {2, ∞} and q = 1), we regularize the representation problem to enforce joint sparsity and learn the particle representations together. As compared to previous methods that handle particles independently, our results demonstrate that mining the interdependencies between particles improves tracking performance and overall computational complexity. Interestingly, we show that the popular L1 tracker (Mei and Ling, IEEE Trans Pattern Anal Mach Intel 33(11):2259–2272, 2011) is a special case of our MTT formulation (denoted as the L11 tracker) when p = q = 1. Under the MTT framework, some of the tasks (particle representations) are often more closely related and more likely to share common relevant covariates than other tasks. Therefore, we extend the MTT framework to take into account pairwise structural correlations between particles (e.g. spatial smooth- ness of representation) and denote the novel framework as S-MTT. The problem of learning the regularized sparse representation in MTT and S-MTT can be solved efficiently using an Accelerated Proximal Gradient (APG) method that yields a sequence of closed form updates. As such, S-MTT and MTT are computationally attractive. We test our pro- posed approach on challenging sequences involving heavy occlusion, drastic illumination changes, and large pose variations. Experimental results show that S-MTT is much better than MTT, and both methods consistently outperform state-of-the-art trackers.',
+        '1O3KDJmXRVkfYz5VUrkW-b3I1-nZ8oqbg',
+    ),
+    Publication(
+        (1, 2013, 'CVPRW'),
+        'Automatic Recognition of Offensive Team Formation in American Football Plays',
+        ('indriyati', 'bernard', 'shaunak', 'karthik', 'narendra'),
+        (),
+        '1tV9N12QW0c4jXR6dEjRjyswR9kALIoSa',
+        {},
+        'Compared to security surveillance and military applications, where automated action analysis is prevalent, the sports domain is extremely under-served. Most existing software packages for sports video analysis require manual annotation of important events in the video. American football is the most popular sport in the United States, however most game analysis is still done manually. Line of scrimmage and offensive team formation recognition are two statistics that must be tagged by American Football coaches when watching and evaluating past play video clips, a process which takes many man hours per week. These two statistics are also the building blocks for more high-level analysis such as play strategy inference and automatic statistic generation. In this paper, we propose a novel framework where given an American football play clip, we automatically identify the video frame in which the offensive team lines in formation (formation frame), the line of scrimmage for that play, and the type of player formation the offensive team takes on. The proposed framework achieves 95% accuracy in detecting the formation frame, 98% accuracy in detecting the line of scrimmage, and up to 67% accuracy in classifying the offensive team’s formation. To validate our framework, we compiled a large dataset comprising more than 800 play-clips of standard and high definition resolution from real-world football games. This dataset will be made publicly available for future comparison.',
+        '1ZGpL7wU5Z6F4xljlWM6qLtaRtsWKU7Vg',
+    ),
+    Publication(
+        (2, 2013, 'CVPRW'),
+        'Object Tracking by Occlusion Detection via Structured Sparse Learning',
+        ('tianzhu', 'bernard', 'changsheng', 'narendra'),
+        (),
+        '1_DNTC-f-WwG8OlWzeXefmcDTLyHbiR_4',
+        {},
+        'Sparse representation based methods have recently drawn much attention in visual tracking due to good performance against illumination variation and occlusion. They assume the errors caused by image variations can be modeled as pixel-wise sparse. However, in many practical scenarios these errors are not truly pixel-wise sparse but rather sparsely distributed in a structured way. In fact, pixels in error constitute contiguous regions within the object’s track. This is the case when significant occlusion occurs. To accommodate for non-sparse occlusion in a given frame, we assume that occlusion detected in previous frames can be propagated to the current one. This propagated information determines which pixels will contribute to the sparse representation of the current track. In other words, pixels that were detected as part of an occlusion in the previous frame will be removed from the target representation process. As such, this paper proposes a novel tracking algorithm that models and detects occlusion through structured sparse learning. We test our tracker on challenging benchmark sequences, such as sports videos, which involve heavy occlusion, drastic illumination changes, and large pose variations. Experimental results show that our tracker consistently outperforms the state-of-the-art.',
+        '1HLfBLdsu1RBSewAB1ab5D1xQhck5ADwl',
+    ),
+    Publication(
+        (2, 2013, 'ICCV'),
+        'Low-Rank Sparse Coding for Image Classification',
+        ('tianzhu', 'bernard', 'si', 'changsheng', 'narendra'),
+        (),
+        '1lJQkRzUEXY1KC-vByo3XhdxRFYzOc5ZN',
+        {},
+        'In this paper, we propose a low-rank sparse coding (LRSC) method that exploits local structure information among features in an image for the purpose of image-level classification. LRSC represents densely sampled SIFT de- scriptors, in a spatial neighborhood, collectively as low-rank, sparse linear combinations of codewords. As such, it casts the feature coding problem as a low-rank matrix learning problem, which is different from previous methods that encode features independently. This LRSC has a number of attractive properties. (1) It encourages sparsity in feature codes, locality in codebook construction, and low-rankness for spatial consistency. (2) LRSC encodes local features jointly by considering their low-rank structure information, and is computationally attractive. We evaluate the LRSC by comparing its performance on a set of challenging bench- marks with that of 7 popular coding and other state-of-the- art methods. Our experiments show that by representing local features jointly, LRSC not only outperforms the state-of- the-art in classification accuracy but also improves the time complexity of methods that use a similar sparse linear repre- sentation model for feature coding.',
+        '1jTzAQZ6UHi-wnfNNVmqpFYW6TjWxbl-X',
+    ),
+    Publication(
+        (1, 2013, 'BMVC'),
+        'A Topic Model Approach to Represent and Classify American Football Plays',
+        ('jagannadan', 'indriyati', 'shaunak', 'bernard', 'narendra'),
+        (),
+        '1sIa-NFqaQ9iGfVQLeKK9AdUcQxvVhZfq',
+        {},
+        'We address the problem of modeling and classifying American Football offense teams’ plays in video, a challenging example of group activity analysis. Automatic play classification will allow coaches to infer patterns and tendencies of opponents more ef- ficiently, resulting in better strategy planning in a game. We define a football play as a unique combination of player trajectories. To this end, we develop a framework that uses player trajectories as inputs to MedLDA, a supervised topic model. The joint maximiza- tion of both likelihood and inter-class margins of MedLDA in learning the topics allows us to learn semantically meaningful play type templates, as well as, classify different play types with 70% average accuracy. Furthermore, this method is extended to analyze individual player roles in classifying each play type. We validate our method on a large dataset comprising 271 play clips from real-world football games, which will be made publicly available for future comparisons.',
+        '1IiFYXiUcH-wsZfBzGwvLwnNc8PF9SlD9',
+    ),
+    Publication(
+        (3, 2013, 'NeuroComputing'),
+        'BILGO: Bilateral Greedy Optimization for Large Scale Semidefinite Programming',
+        ('ganzhao', 'bernard', 'zhenjie', 'zhifeng'),
+        (),
+        '1ux336oOu3lZCy1if5mmUAU5nRMfdF0vt',
+        {},
+        'Many machine learning tasks (e.g. metric and manifold learning problems) can be formulated as convex semidefinite programs. To enable the applica- tion of these tasks on a large-scale, scalability and computational efficiency are considered desirable properties for a practical semidefinite programming algorithm. In this paper, we theoretically analyse a new bilateral greedy opti- mization(denoted BILGO) strategy in solving general semidefinite programs on large-scale datasets. As compared to existing methods, BILGO employs a bilateral search strategy during each optimization iteration. In such an iteration, the current semidefinite matrix solution is updated as a bilater- al linear combination of the previous solution and a suitable rank-1 matrix, which can be efficiently computed from the leading eigenvector of the descent direction at this iteration. By optimizing for the coefficients of the bilateral combination, BILGO reduces the cost function in every iteration until the KKT conditions are fully satisfied, thus, it tends to converge to a global opti- mum. For an ǫ-accurate solution, we prove the number of BILGO iterations needed for convergence is O(ǫ−1). The algorithm thus successfully combines the efficiency of conventional rank-1 update algorithms and the effectiveness of gradient descent. Moreover, BILGO can be easily extended to handle low rank constraints. To validate the effectiveness and efficiency of BILGO, we apply it to two important machine learning tasks, namely Mahalanobis metric learning and maximum variance unfolding. Extensive experimental results clearly demonstrate that BILGO can solve large-scale semidefinite programs efficiently.',
+        '1vbBjTCtPm5Quprr181psaJgL1Y2VOsXr',
+    ),
+    Publication(
+        (2, 2012, 'CVPR'),
+        'Robust Visual Tracking via Multi-Task Sparse Learning',
+        ('tianzhu', 'bernard', 'si', 'narendra'),
+        ('Oral',),
+        '1I8D9vk56o7smg9TvJT54GBI9xps0jOnQ',
+        {},
+        'In this paper, we formulate object tracking in a particle filter framework as a multi-task sparse learning problem, which we denote as Multi-Task Tracking (MTT). Since we model particles as linear combinations of dictionary templates that are updated dynamically, learning the representation of each particle is considered a single task in MTT. By employing popular sparsity-inducing lp,q mixed norms (p ∈ {2, ∞} and q = 1), we regularize the representation problem to enforce joint sparsity and learn the particle representations together. As compared to previous methods that handle particles independently, our results demonstrate that mining the interdependencies between particles improves tracking performance and overall computational complexity. Interestingly, we show that the popular L1 tracker [15] is a special case of our MTT formulation (denoted as the L11 tracker) when p = q = 1. The learning problem can be efficiently solved using an Accelerated Proximal Gradient (APG) method that yields a sequence of closed form updates. As such, MTT is computationally attractive. We test our proposed approach on challenging sequences involving heavy occlusion, drastic illumination changes, and large pose variations. Experimental results show that MTT methods consistently outperform state-of-the-art trackers.',
+        '1U9WLbY1uP4laarG4apAlBTW7k6OAjYz2',
+    ),
+    Publication(
+        (2, 2012, 'ECCV'),
+        'Low-Rank Sparse Learning for Robust Visual Tracking',
+        ('tianzhu', 'bernard', 'si', 'narendra'),
+        (),
+        '1A1vVO2HEjD4KxqGoi7Cjs9UGeXourFhb',
+        {},
+        'In this paper, we propose a new particle-filter based tracking algorithm that exploits the relationship between particles (candidate targets). By representing particles as sparse linear combinations of dictionary templates, this algorithm capitalizes on the inherent low-rank structure of particle representations that are learned jointly. As such, it casts the tracking problem as a low-rank matrix learning problem. This low-rank sparse tracker (LRST) has a number of attractive properties. (1) Since LRST adaptively updates dictionary templates, it can handle significant changes in appearance due to variations in illumination, pose, scale, etc. (2) The linear representation in LRST explicitly incorporates background templates in the dictionary and a sparse error term, which enables LRST to address the tracking drift problem and to be robust against occlusion respectively. (3) LRST is computationally attractive, since the low-rank learning problem can be efficiently solved as a sequence of closed form update operations, which yield a time complexity that is linear in the number of particles and the template size. We evaluate the performance of LRST by applying it to a set of challenging video sequences and comparing it to 6 popular tracking methods. Our experiments show that by representing particles jointly, LRST not only outperforms the state-of-the-art in tracking accuracy but also significantly improves the time complexity of methods that use a similar sparse linear representation model for particles.',
+        '1nWCT84Qtw1YW4UY3pnARfas6RL7ZohrW',
+    ),
+    Publication(
+        (3, 2012, 'ICPR'),
+        'Do Humans Fixate on Interest Points',
+        (('akshat', 'rachit'), 'bernard'),
+        ('Oral',),
+        '1Gg7u3qegUtAehXiEzcx8exXAO5wTuQ8x',
+        {},
+        'Interest point detectors (e.g. SIFT, SURF, and MSER) have been successfully applied to numerous applications in high level computer vision tasks such as object detection, and image classification. Despite their popularity, the perceptual relevance of these detectors has not been thoroughly studied. Here, perceptual relevance is meant to define the correlation between these point detectors and free-viewing human fixations on images. In this work, we provide empirical evidence to shed light on the fundamental question: “Do humans fixate on interest points in images?”. We believe that insights into this question may play a role in improving the performance of vision systems that utilize these interest point detectors. We conduct an extensive quantitative comparison between the spatial distributions of human fixations and automatically detected interest points on a recently released dataset of 1003 images. This comparison is done at both the global (image) level as well as the local (region) level. Our experimental results show that there exists a weak correlation between the spatial distributions of human fixation and interest points.',
+        '1qHb2K-ABSRaIfRj9mVgV5P3qvBaoqjGN',
+    ),
+    Publication(
+        (1, 2012, 'ICPR'),
+        'Context-Aware Learning For Automatic Sports Highlight Recognition',
+        ('bernard', ('maya', 'marcfarra'), 'tianzhu'),
+        (),
+        '1rrojnprXHBJ56dxud-T4ZomjcOezwo4U',
+        {},
+        'Video highlight recognition is the procedure in which a long video sequence is summarized into a shorter video clip that depicts the most “salient” parts of the sequence. It is an important technique for content delivery systems and search systems which create multimedia content tailored to their users’ needs. This paper deals specifically with capturing highlights inherent to sports videos, especially for American football. Our proposed system exploits the multimodal nature of sports videos (i.e. visual, audio, and text cues) to detect the most important segments among them. The optimal combination of these cues is learned in a data-driven fashion using user preferences (expert input) as ground truth. Unlike most highlight recognition systems in the literature that define a highlight to be salient only in its own right (globally salient), we also consider the context of each video segment w.r.t. the video sequence it belongs to (locally salient). To validate our method, we compile a large dataset of broadcast American football videos, acquire their ground truth highlights, and evaluate the performance of our learning approach.',
+        '19YxaTQca7x_cmTT2n_jEZsHdOSPtxwpn',
+    ),
+    Publication(
+        (1, 2012, 'ICPR'),
+        'Trajectory-based Fisher Kernel Representation for Action Recognition in Videos',
+        ('indriyati', 'bernard', 'narendra'),
+        ('Oral',),
+        '1PZKjWK3rT4xDe3amIjZ2dsFYbETr96_i',
+        {},
+        'Action recognition is an important computer vision problem that has many applications including video indexing and retrieval, event detection, and video summarization. In this paper, we propose to apply the Fisher kernel paradigm to action recognition. The Fisher kernel framework combines the strengths of generative and discriminative models. In this approach, given the trajectories extracted from a video and a generative Gaussian Mixture Model (GMM), we use the Fisher Kernel method to describe how much the GMM parameters are modified to best fit the video trajectories. We experiment in using the Fisher Kernel vector to create the video representation and to train an SVM classifier. We further extend our framework to select the most discriminative trajectories using a novel MIL-KNN framework. We compare the performance of our approach to the current state-of-the-art bag-of-features (BOF) approach on two benchmark datasets. Experimental results show that our proposed approach outperforms the state-ofthe-art method [8] and that the selected discriminative trajectories are descriptive of the action class.',
+        '1IJFBtpTfwq3D41MfnNa_mDH-nU-pMfU5',
+    ),
+    Publication(
+        (3, 2012, 'CVIU'),
+        'Modeling Dynamic Swarms',
+        ('bernard', 'narendra'),
+        (),
+        '1C3zQIz5vcIolThs_yGtB4UCDulYG_hmH',
+        {},
+        'This paper proposes the problem of modeling video sequences of dynamic swarms (DSs). We define a DS as a large layout of stochastically repetitive spatial configurations of dynamic objects (swarm elements) whose motions exhibit local spatiotemporal interdependency and stationarity, i.e., the motions are similar in any small spatiotemporal neighborhood. Examples of DS abound in nature, e.g., herds of animals and flocks of birds. To capture the local spatiotemporal properties of the DS, we present a probabilistic model that learns both the spatial layout of swarm elements (based on low-level image segmentation) and their joint dynamics that are modeled as linear transformations. To this end, a spatiotemporal neighborhood is associated with each swarm element, in which local stationarity is enforced both spatially and temporally. We assume that the prior on the swarm dynamics is distributed according to an MRF in both space and time. Embedding this model in a MAP framework, we iterate between learning the spatial layout of the swarm and its dynamics. We learn the swarm transformations using ICM, which iterates between estimating these transformations and updating their distribution in the spatiotemporal neighborhoods. We demonstrate the validity of our method by conducting experiments on real and synthetic video sequences. Real sequences of birds, geese, robot swarms, and pedestrians evaluate the applicability of our model to real world data.',
+        '1dMK-4NEeaORio9GtxGxqZfye0yV93_be',
+    ),
+    Publication(
+        (1, 2012, 'ICASSP'),
+        'Robust Video Registration Applied to Field-Sports Video Analysis',
+        ('bernard', 'tianzhu', 'narendra'),
+        (),
+        '1_6j4CGoJrzWhY6rRRrB27yqXPf3VUtc7',
+        {},
+        'Video (image-to-image) registration is a fundamental problem in computer vision. Registering video frames to the same coordinate system is necessary before meaningful inference can be made from a dynamic scene in the presence of camera motion. Standard registration techniques detect specific structures (e.g. points and lines), find potential correspondences, and use a random sampling method to choose inlier correspondences. Unlike these standards, we propose a parameter-free, robust registration method that avoids explicit structure matching by matching entire images or image patches. We frame the registration problem in a sparse representation setting, where outlier pixels are assumed to be sparse in an image. Here, robust video registration (RVR) becomes equivalent to solving a sequence of `1 minimization problems, each of which can be solved using the Inexact Augmented Lagrangian Method (IALM). Our RVR method is made efficient (sublinear complexity in the number of pixels) by exploiting a hybrid coarse-to-fine and random sampling strategy along with the temporal smoothness of camera motion. We showcase RVR in the domain of sports videos, specifically American football. Our experiments on real-world data show that RVR outperforms standard methods and is useful in several applications (e.g. automatic panoramic stitching and non-static background subtraction).',
+        '1GiHMRifw0k9X1-2doFlE_3_SC5LMKkBY',
+    ),
+    Publication(
+        (2, 2012, 'ICASSP'),
+        'Robust multi-object tracking via cross-domain contextual information for sports video analysis',
+        ('tianzhu', 'bernard', 'narendra'),
+        (),
+        '1YmS6W6XP058Kov768jY-f75UDPMfI9r7',
+        {},
+        'Multiple player tracking is one of the main building blocks needed in a sports video analysis system. In an uncalibrated camera setting, robust mutli-object tracking can be very dif- ficult due to a number of reasons including the presence of noise, occlusion, fast camera motion, low-resolution image capture, varying viewpoints and illumination changes. To address the problem of multi-object tracking in sports videos, we go beyond the video frame domain and make use of information in a homography transform domain that is denoted the homography field domain. We propose a novel particle filter based tracking algorithm that uses both object appearance information (e.g. color and shape) in the image domain and cross-domain contextual information in the field domain to improve object tracking. In the field domain, the effect of fast camera motion is significantly alleviated since the underlying homography transform from each frame to the field domain can be accurately estimated. We use contextual trajectory information (intra-trajectory and inter-trajectory context) to further improve the prediction of object states within an particle filter framework. Here, intra-trajectory contextual information is based on history tracking results in the field domain, while inter-trajectory contextual information is extracted from a compiled trajectory dataset based on tracks computed from videos depicting the same sport. Experimental results on real world sports data show that our system is able to effectively and robustly track a variable number of targets regardless of background clutter, camera motion and frequent mutual occlusion between targets.',
+        '1lqshI5YYIrpkejiczVQioxOPFB5_z5Aw',
+    ),
+    Publication(
+        (3, 2013, 'NeuroComputing'),
+        'Low-Rank Quadratic Semidefinite Programming',
+        ('ganzhao', ('zhenjie', 'bernard'), 'zhifeng'),
+        (),
+        '1eg5fpAx3rSmsAs2aOwKqPWIJigXND88-',
+        {},
+        'Low rank matrix approximation is an attractive model in large scale machine learning problems, because it can not only reduce the memory and runtime complexity, but also provide a natural way to regularize parameters while preserving learning accuracy. In this paper, we address a special class of nonconvex quadratic matrix optimization problems, which require a low rank positive semidefinite solution. Despite their non-convexity, we exploit the structure of these problems to derive an efficient solver that converges to their local optima. Furthermore, we show that the proposed solution is capable of dramatically enhancing the efficiency and scalability of a variety of concrete problems, which are of significant interest to the machine learning community. These problems include the Top k Eigenvalue Problem, Distance Learning and Kernel Learning. Extensive experiments on UCI benchmarks have shown the effectiveness and efficiency of our proposed method.',
+        '1aaM8RXk9US-MQoG3PVAJF7SI2lCP1sIa',
+    ),
+]
