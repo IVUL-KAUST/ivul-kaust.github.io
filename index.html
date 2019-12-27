@@ -7,27 +7,52 @@
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
     integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
 
-  <title>IVUL Publications</title>
+  <title>Publications</title>
   <style>
-    .paper-item img {
-      width: 25%;
-    }
-
-    /* hide the thumbnail in small screens */
     @media screen and (max-width:768px) {
-      .paper-item img {
+
+      .sm-hide {
         display: none;
       }
+    }
+
+    @media screen and (min-width:768px) {
+
+      .sm-show {
+        display: none;
+      }
+
     }
   </style>
   <script type="text/javascript" src="publib.js"></script>
   <script>
     "use strict";
+    // https://developer.snapappointments.com/bootstrap-select/methods/#selectpickermobile
+    const mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
+    function small_screen() {
+      return mobile || $(window).width() < 768;
+    }
+
+    // https://www.sitepoint.com/get-url-parameters-with-javascript/
+    const params = new URLSearchParams(window.location.search);
+    const p_authors = params.getAll('a');
+    const p_themes = params.getAll('t');
+    const p_venues = params.getAll('v');
+    const p_years = params.getAll('y');
+    const p_filters = params.getAll('f');  // if f=hide, remove the filters
+    const p_count = p_authors.length + p_themes.length + p_venues.length + p_years.length;
+
+    const themes = [undefined, 'Video Understanding', 'Vision for Autonomous Navigation', 'Fundamentals / Tools'];
+    const theme_colors = ['light', 'danger', 'primary', 'success'];
     const full_venue = {};
     // const full_venue = { 
     //     'CVPR': 'IEEE Conference on Computer Vision and Pattern Recognition',
     // };
+    for (let i in publib.venue) {
+      full_venue[publib.venue[i]] = publib.full_venue[i];
+    }
     const biblib = {};
     // const biblib = {
     //   Muller_2019_CVPRW_LACFN: {
@@ -38,16 +63,13 @@
     //     distinctions: ['Oral', 'Best Paper Award'],
     //     abstract: 'Example.',
     //     year: 2019,
+    //     paper: '{FileId}',  # Google Drive ID or raw URL
     //     thumbnail: '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w',  # Google Drive ID or raw URL
     //     links: {
-    //       paper: '{FileId}',  # Google Drive ID or raw URL
     //       code: 'https://github.com/example/{RepoName}',  # Google Drive ID or raw URL
     //     },
     //   },
     // };
-    for (let i in publib.venue) {
-      full_venue[publib.venue[i]] = publib.full_venue[i];
-    }
     for (let pub of publib.lib) {
       const bibitem = {};
       bibitem.links = {};
@@ -73,9 +95,6 @@
           case 'venue':
             bibitem.venue = publib.venue[value];
             break;
-          case 'paper':
-            bibitem.links.paper = value;
-            break;
           case 'distinctions':
             bibitem.distinctions = [];
             for (let i of value) {
@@ -91,6 +110,7 @@
             break;
           case 'theme':
           case 'title':
+          case 'paper':
           case 'abstract':
           case 'thumbnail':
             bibitem[key] = value;
@@ -117,53 +137,117 @@
 </head>
 
 <body>
-  <!-- Papers -->
   <div class="container">
+    <!-- Filters -->
     <div class="row">
+      <div class="col">
+        <div class="card border-dark mt-2 mb-1">
+          <div class="card-body text-dark">
+            <button id="filtersButton" class="btn btn-dark" type="button" data-toggle="collapse"
+              data-target="#filtersForm" aria-expanded="false" aria-controls="filtersForm">
+              Filter Publications
+            </button>
+            <form id="filtersForm" class="mt-2 collapse">
+              <div class="form-group row">
+                <label for="selectThemes" class="col-2 col-form-label sm-hide">Themes</label>
+                <div class="col">
+                  <select multiple id="selectThemes" title="Select themes" class="form-control selectpicker"
+                    data-actions-box="true">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="selectYears" class="col-2 col-form-label sm-hide">Years</label>
+                <div class="col">
+                  <select multiple id="selectYears" title="Select years" class="form-control selectpicker"
+                    data-live-search="true" data-actions-box="true" data-selected-text-format="count > 5" data-size="5">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="selectVenues" class="col-2 col-form-label sm-hide">Venues</label>
+                <div class="col">
+                  <select multiple id="selectVenues" title="Select venues" class="form-control selectpicker"
+                    data-live-search="true" data-actions-box="true" data-selected-text-format="count > 3" data-size="5">
+                  </select>
+                </div>
+              </div>
+              <div class="form-group row">
+                <label for="selectAuthors" class="col-2 col-form-label sm-hide">Authors</label>
+                <div class="col">
+                  <select multiple id="selectAuthors" title="Select authors" class="form-control selectpicker"
+                    data-live-search="true" data-actions-box="true" data-selected-text-format="count > 3" data-size="5">
+                  </select>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-dark float-right">Filter</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Papers -->
+    <div class="row overflow-auto">
       <div class="col">
         <ul id="paperList" class="list-unstyled"></ul>
       </div>
     </div>
-  </div>
-  <!-- Abstract modal -->
-  <div class="modal fade" id="paperAbstract" tabindex="-1" role="dialog" aria-labelledby="paperAbstractTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="paperAbstractTitle"></h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+    <!-- Up button -->
+    <div class="row">
+      <button id="upButton" type="button" class="btn btn-outline-dark btn-sm rounded-circle">Up</button>
+    </div>
+    <!-- More button -->
+    <div class="row">
+      <div class="col text-center mb-4">
+        <button id="moreButton" type="button" class="btn btn-dark btn-lg">More</button>
+      </div>
+    </div>
+    <!-- Abstract modal -->
+    <div class="row">
+      <div class="modal fade" id="paperAbstract" tabindex="-1" role="dialog" aria-labelledby="paperAbstractTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="paperAbstractTitle"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
-        <div class="modal-body"></div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- Citation modal -->
+    <div class="row">
+      <div class="modal fade" id="paperBibTex" tabindex="-1" role="dialog" aria-labelledby="paperBibTexTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="paperBibTexTitle">Modal title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <pre><code></code></pre>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-success" onclick="document.execCommand('copy');">Copy</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Citation modal -->
-  <div class="modal fade" id="paperBibTex" tabindex="-1" role="dialog" aria-labelledby="paperBibTexTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="paperBibTexTitle">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <pre><code></code></pre>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
     integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
     crossorigin="anonymous"></script>
@@ -173,147 +257,271 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
     crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
   <script>
-    $('#paperAbstract').on('show.bs.modal', function (event) {
-      const modal = $(this);
-      const bibkey = $(event.relatedTarget).data('bibkey');
-      const bibitem = biblib[bibkey];
-      modal.find('.modal-title').text(bibitem.title);
-      modal.find('.modal-body').text(bibitem.abstract);
-    });
-    $('#paperBibTex').on('show.bs.modal', function (event) {
-      const modal = $(this);
-      const bibkey = $(event.relatedTarget).data('bibkey');
-      const bibitem = biblib[bibkey];
-      const bibtex = `@paper{${bibkey},
-        author = {${bibitem.authors.join(" and ")}},
-        title = {${bibitem.title}},
-        conference = {${full_venue[bibitem.venue]}},
-        year = {${bibitem.year}},\n}`.replace(/\n +/g, '\n  ');
-      modal.find('.modal-title').text(bibitem.title);
-      modal.find('.modal-body').find('code').text(bibtex);
-    });
-    function getDriveURL(drive_url, image = false) {
-      if (drive_url.includes('/')) {
-        return drive_url;
-      } else if (!drive_url) {
-        drive_url = '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w';  // placeholder IVUL logo
-      }
-      if (image) {
-        return `https://drive.google.com/uc?export=view&id=${drive_url}`;
-      } else {
-        return `https://drive.google.com/file/d/${drive_url}/view?usp=sharing`
-      }
-    }
-    function toMedia(element, image_url = '', image_alt = '') {
-      // takes an HTML element and convert it into a Bootstrap media object with a thumbnail
-      element.addClass('media py-1').append([
-        $('<img>').attr({
-          src: getDriveURL(image_url, true),
-          alt: image_alt,
-          class: 'align-self-center mr-0',
-        }),
-        $('<div>').attr('class', 'media-body'),
-      ]);
-      return element.children().last();
-    }
-    function toCard(element, title = '', subtitle = '') {
-      // takes an HTML element and convert it into a Bootstrap card with footer
-      const card_body = $('<div>').attr('class', 'card-body').append([
-        $('<h5>').attr('class', 'card-title').text(title),
-        $('<h6>').attr('class', 'card-subtitle mb-2 text-muted').text(subtitle),
-        $('<p>').attr('class', 'card-text'),
-      ]);
-      const card_footer = $('<div>').attr('class', 'card-footer');
-      element.addClass('card').append(card_body, card_footer);
-      return { body: card_body.children().last(), footer: card_footer };
-    }
-    function createButton(text, style = 'dark', link = null, target = null) {
-      const button = $('<button>').attr({
-        type: 'button',
-        class: `btn btn-${style} btn-sm m-1`,
-      }).text(text);
-      if (link) {
-        return $('<a>').attr({ href: link, target: target }).append(button);
-      }
-      return button;
-    }
-    function createItem(bibkey) {
-      const bibitem = biblib[bibkey];
-      const authors = bibitem.authors.join(', ');
-      const distinctions = bibitem.distinctions.length ?
-        ('[' + bibitem.distinctions.join('] [') + ']') : '';
-      const li = $('<li>').attr('class', 'paper-item');
-      const media = toMedia(li, bibitem.thumbnail, bibitem.title);
-      const card = toCard(media, bibitem.title, authors);
-      card.body.append([
-        createButton(`Theme ${bibitem.theme}`, 'secondary'),
-        $('<i>').text(` Published in ${bibitem.venue} ${bibitem.year} `),
-        $('<b>').text(distinctions),
-      ]);
-      card.footer.append(createButton('Abstract', 'outline-primary').attr({
-        'data-toggle': 'modal',
-        'data-target': '#paperAbstract',
-        'data-bibkey': bibkey,
-      }));
-      card.footer.append(createButton('Paper', `outline-success`, getDriveURL(bibitem.links['paper']), '_blank'));
-      for (let key in bibitem.links) {
-        if (key === 'paper') {
-          continue;
+    "use strict";
+    $(document).ready(function () {
+      { // page setup
+        if (p_filters.includes('fluid')) {
+          $('body > .container').first().toggleClass('container container-fluid');
         }
-        const link = getDriveURL(bibitem.links[key]);
-        const button = createButton(key, `outline-dark`, link, '_blank');
-        card.footer.append(button);
-      }
-      card.footer.append(createButton('Cite', 'outline-danger').attr({
-        'data-toggle': 'modal',
-        'data-target': '#paperBibTex',
-        'data-bibkey': bibkey,
-      }));
-      return li;
-    }
-  </script>
-  <script>
-    // https://www.sitepoint.com/get-url-parameters-with-javascript/
-    const params = new URLSearchParams(window.location.search);
-    const p_authors = params.getAll('author');
-    const p_themes = params.getAll('theme');
-    const p_venues = params.getAll('venue');
-    const p_years = params.getAll('year');
+      };
+      { // setup up button
+        const button = $('#upButton').css({
+          'display': 'none', position: 'fixed', bottom: '20px', right: '15px',
+        }).click(() => $(window).scrollTop(0));
+        $(window).scroll(function () {
+          if ($(this).scrollTop() > 200) {
+            button.show();
+          } else {
+            button.hide();
+          }
+        });
+      };
+      { // setup modals
+        function selectContent(element) {
+          const selection = window.getSelection();
+          const range = document.createRange();
+          selection.removeAllRanges();
+          range.selectNodeContents(element);
+          selection.addRange(range);
+        }
+        $('#paperAbstract').on('show.bs.modal', function (event) {
+          const modal = $(this);
+          const bibkey = $(event.relatedTarget).data('bibkey');
+          const bibitem = biblib[bibkey];
+          modal.find('.modal-title').text(bibitem.title);
+          modal.find('.modal-body').text(bibitem.abstract);
+        });
+        $('#paperBibTex').on('show.bs.modal', function (event) {
+          const modal = $(this);
+          const title = modal.find('.modal-title');
+          const body = modal.find('.modal-body').find('code');
+          const bibkey = $(event.relatedTarget).data('bibkey');
+          const bibitem = biblib[bibkey];
+          title.text(bibitem.title);
+          body.text(`@paper{${bibkey},
+                      author = {${bibitem.authors.join(" and ")}},
+                      title = {${bibitem.title}},
+                      conference = {${full_venue[bibitem.venue]}},
+                      year = {${bibitem.year}},\n}`.replace(/\n +/g, '\n  '));
+          selectContent(body[0]);
+        });
+      };
+      { // setup #filtersForm
+        { // setup selectpicker
+          const select = $('.selectpicker').selectpicker();
+          $(window).resize(function (event) {
+            select.data('should_refresh', true);
+          });
+          select.on('show.bs.select', function (event) {
+            if (select.data('should_refresh')) {
+              select.selectpicker('refresh');
+            }
+          });
+        };
+        { // #selectThemes
+          const select = $('#selectThemes');
+          for (let i in themes) {
+            if (themes[i]) {
+              select.append($('<option>').attr({
+                value: i, title: `Theme ${i}`,
+                class: `p-1 my-1 border border-${theme_colors[i]} text-${theme_colors[i]} rounded`,
+              }).text(`[${i}] ${themes[i]}`).prop('selected', p_themes.length ? p_themes.includes(i) : true));
+            }
+          }
+          select.selectpicker('refresh');
+        };
+        { // #selectYears
+          const select = $('#selectYears');
+          const year = publib.keys.findIndex(k => k == 'year');
+          const years = [...new Set(publib.lib.map(p => p[year]))];
+          for (let y of years.sort().reverse().map(y => (y + 2000).toString())) {
+            select.append($('<option>').text(y).prop('selected', p_years.includes(y)));
+          }
+          select.selectpicker('refresh');
+        };
+        { // #selectVenues
+          const select = $('#selectVenues');
+          for (let venue in full_venue) {
+            select.append($('<option>').attr('data-tokens', full_venue[venue]).text(venue)
+              .prop('selected', p_venues.includes(venue)));
+          }
+          select.selectpicker('refresh');
+        };
+        { // #selectAuthors
+          const select = $('#selectAuthors');
+          for (let author of publib.author.concat().sort()) {
+            select.append($('<option>').text(author).prop('selected', p_authors.includes(author)));
+          }
+          select.selectpicker('refresh');
+        };
+        { // show
+          const button = $('#filtersButton').on('click', function () {
+            $(this).remove();
+          });
+          if (p_count) {
+            button.click();
+          }
+        };
+        { // submit
+          function getParams(select) {
+            const values = select.val();
+            if (select[0].options.length == values.length) {
+              return [];
+            }
+            return values;
+          }
+          $('#filtersForm').on('submit', function (event) {
+            event.preventDefault();
+            const s_themes = getParams($('#selectThemes'));
+            const s_years = getParams($('#selectYears'));
+            const s_venues = getParams($('#selectVenues'));
+            const s_authors = getParams($('#selectAuthors'));
+            window.location.search = [
+              ...s_themes.map(t => 't=' + t),
+              ...s_years.map(y => 'y=' + y),
+              ...s_venues.map(v => 'v=' + v),
+              ...s_authors.map(a => 'a=' + a),
+            ].join('&');
+          });
+        };
+        if (p_filters.map(f => f.toLowerCase()).includes('hide')) {
+          // hide the filters
+          $('#filtersForm').closest('.row').remove();
+        }
+      };
+      { // filter, sort, and display
+        function getDriveURL(drive_url, image = false) {
+          if (drive_url.includes('/')) {
+            return drive_url;
+          } else if (!drive_url) {
+            drive_url = '1mYuiwV7hsiC9ElORbNf0JA5ArxcZVm5w';  // placeholder IVUL logo
+          }
+          if (image) {
+            return `https://drive.google.com/uc?export=view&id=${drive_url}`;
+          } else {
+            return `https://drive.google.com/file/d/${drive_url}/view?usp=sharing`
+          }
+        }
+        function toMedia(element, image_url = '', image_alt = '') {
+          // takes an HTML element and convert it into a Bootstrap media object with a thumbnail
+          const img = $('<img>').attr({
+            src: getDriveURL(image_url, true),
+            alt: image_alt,
+            class: 'align-self-center mr-0',
+          });
+          const div = $('<div>').attr('class', 'media-body');
+          element.addClass('media py-1').append([img, div]);
+          return { image: img, body: div };
+        }
+        function toCard(element, title = '', subtitle = '') {
+          // takes an HTML element and convert it into a Bootstrap card with footer
+          const card_body = $('<div>').attr('class', 'card-body').append([
+            $('<h5>').attr('class', 'card-title').text(title),
+            $('<h6>').attr('class', 'card-subtitle mb-2 text-muted').text(subtitle),
+            $('<p>').attr('class', 'card-text'),
+          ]);
+          const card_footer = $('<div>').attr('class', 'card-footer');
+          element.addClass('card').append(card_body, card_footer);
+          return { body: card_body.children().last(), footer: card_footer };
+        }
+        function createButton(style = 'dark', link = null, target = '_blank', enabled = true) {
+          let button;
+          if (link) {
+            button = $('<a>').attr({ href: link, target: link ? target : null, role: 'button' });
+            if (!enabled) {
+              button.attr({ 'tabindex': -1, 'class': 'disabled', 'aria-disabled': true });
+            }
+          } else {
+            button = $('<button>').attr('type', 'button').prop('disabled', !enabled);
+          }
+          return button.addClass(`btn btn-${style} btn-sm m-1`);
+        }
+        function createItem(bibkey) {
+          const bibitem = biblib[bibkey];
+          const authors = bibitem.authors.join(', ');
+          const distinctions = bibitem.distinctions.length ?
+            ('[' + bibitem.distinctions.join('] [') + ']') : '';
+          const li = $('<li>');
+          const media = toMedia(li, bibitem.thumbnail, bibitem.title);
+          media.image.addClass('sm-hide').width('25%');
+          if (small_screen()) {
+            media.image.remove();
+          }
+          const card = toCard(media.body, bibitem.title, authors);
+          const theme_color = theme_colors[bibitem.theme];
+          card.body.append([
+            createButton(theme_color, '#', null, false).append([
+              $('<span>').attr('class', 'sm-show').text(`Theme ${bibitem.theme}`),
+              $('<span>').attr('class', 'sm-hide').text(themes[bibitem.theme]),
+            ]).addClass('px-1 ml-0 mr-1'),
+            $('<i>').text(`Published in ${bibitem.venue} ${bibitem.year} `),
+            $('<b>').append([$('<br>').attr('class', 'sm-show'), distinctions]),
+          ]);
+          card.footer.append(createButton('info').text('Abstract').attr({
+            'data-toggle': 'modal',
+            'data-target': '#paperAbstract',
+            'data-bibkey': bibkey,
+          }));
+          card.footer.append(createButton(`outline-${theme_color}`, getDriveURL(bibitem.paper)).text('Paper'));
+          for (let key in bibitem.links) {
+            const link = getDriveURL(bibitem.links[key]);
+            const button = createButton(`outline-dark`, link).text(key);
+            card.footer.append(button);
+          }
+          card.footer.append(createButton('outline-info').text('Cite').attr({
+            'data-toggle': 'modal',
+            'data-target': '#paperBibTex',
+            'data-bibkey': bibkey,
+          }));
+          return li;
+        }
 
-    var filtered = [];
-    for (let bibkey in biblib) {
-      let bibitem = biblib[bibkey];
-      if (p_years.length) {
-        if (!p_years.find((p) => bibitem.year == p)) {
-          continue;
+        let filtered = [];
+        for (let bibkey in biblib) {
+          let bibitem = biblib[bibkey];
+          if (p_years.length) {
+            if (!p_years.find((p) => bibitem.year == p)) {
+              continue;
+            }
+          }
+          if (p_themes.length) {
+            if (!p_themes.find((p) => bibitem.theme == p)) {
+              continue;
+            }
+          }
+          if (p_venues.length) {
+            let venue = bibitem.venue.toLowerCase();
+            if (!p_venues.find((p) => venue === p.toLowerCase())) {
+              continue;
+            }
+          }
+          if (p_authors.length) {
+            let authors = bibitem.authors.join('|').toLowerCase();
+            if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
+              continue;
+            }
+          }
+          let sort_key = bibitem.year.toString() + bibitem.venue + bibitem.authors[0];
+          filtered.push([bibkey, sort_key]);
         }
-      }
-      if (p_themes.length) {
-        if (!p_themes.find((p) => bibitem.theme == p)) {
-          continue;
-        }
-      }
-      if (p_venues.length) {
-        let venue = bibitem.venue.toLowerCase();
-        if (!p_venues.find((p) => venue === p.toLowerCase())) {
-          continue;
-        }
-      }
-      if (p_authors.length) {
-        let authors = bibitem.authors.join('|').toLowerCase();
-        if (!p_authors.find((p) => authors.includes(p.toLowerCase()))) {
-          continue;
-        }
-      }
-      let sort_key = bibitem.year.toString() + bibitem.venue + bibitem.authors[0];
-      filtered.push([bibkey, sort_key]);
-    }
-    filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1);
-    const paper_list = $('#paperList');
-    for (let pair of filtered) {
-      paper_list.append(createItem(pair[0]));
-    }
+        filtered = filtered.sort((a, b) => (a[1] < b[1]) ? 1 : -1).map(a => a[0]);
+
+        { // setup more button
+          let start = 0;
+          const paper_list = $('#paperList');
+          const button = $('#moreButton').click(function () {
+            for (let paper of filtered.splice(0, 5)) {
+              paper_list.append(createItem(paper));
+            }
+            if (!filtered.length) {
+              $(this).closest('.row').remove();
+            }
+          }).click();
+        };
+      };
+    });
   </script>
 </body>
 
