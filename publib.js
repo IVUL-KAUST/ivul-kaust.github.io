@@ -8,12 +8,12 @@ const publib = {
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
 		['10754/653108', 3, 20, 8, '', '', 'A Stochastic Derivative Free Optimization Method with Momentum', [91, 3, 90, 88, 89],
-            [0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
             [],
             [0, 0, 0, 0, 0, 0, 'https://openreview.net/forum?id=HylAoJSKvH'], "​​We consider the problem of unconstrained minimization of a smooth objective function in R^n in setting where only function evaluations are possible. We propose and analyze stochastic zeroth-order method with heavy ball momentum. In particular, we propose, SMTP, a momentum version of the stochastic three-point method (STP) Bergou et al.  2019). We show new complexity results for non-convex, convex and strongly convex functions. We test our method on a collection of  earning to continuous control tasks on several MuJoCo Todorov et al. (2012) environments with varying difficulty and compare against STP, other state-of-the-art derivative-free optimization algorithms and against policy gradient methods. SMTP significantly outperforms STP and all other methods that we considered in our numerical experiments. Our second contribution is SMTP with importance sampling which we call SMTP_IS. We provide convergence analysis of this method for non-convex, convex and strongly convex objectives."
         ],
         ['10754/653108', 3, 20, 9, '', '', 'A Stochastic Derivative-Free Optimization Method with Importance Sampling: Theory and Learning to Control', [3, 88, 90, 0, 89],
-            [0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
             [],
             [0, 0, 0, 0, 0, 0, 'https://arxiv.org/abs/1902.01272'], "​​We consider the problem of unconstrained minimization of a smooth objective function in a setting where only function evaluations are possible. While importance sampling is one of the most popular techniques used by machine learning practitioners to accelerate the convergence of their models when applicable, there is not much existing theory for this acceleration in the derivative-free setting. In this paper, we propose the first derivative free optimization method with importance sampling and derive new improved complexity results on non-convex, convex and strongly convex functions. We conduct extensive experiments on various synthetic and real LIBSVM datasets confirming our theoretical results. We further test our method on a collection of continuous control tasks on MuJoCo environments with varying difficulty. Experiments suggest that our algorithm is practical for high dimensional continuous control problems where importance sampling results in a significant sample complexity improvement."
         ],
