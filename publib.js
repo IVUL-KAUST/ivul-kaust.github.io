@@ -7,6 +7,11 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
+	    ['10754/660731', 2, 20, 2, '1y8VPQ2nlrHeY9JtjIYkUTDgBB1rULMVX', '1aDvx5ro3g0kAYoEjxXjjV183NYBgjSbl', 'SGAS: Sequential Greedy Architecture Search', [4, 130, 132, 21, 1, 0],
+            [1, 1, 1, 0, 0, 0],
+            [],
+            ['https://github.com/lightaime/sgas', 0, 'https://www.youtube.com/watch?v=I2ILmGJwO38&ab_channel=GuohaoLi', '', '', '', 'https://www.deepgcns.org/auto/sgas'], "Architecture design has become a crucial component of successful deep learning. Recent progress in automatic neural architecture search (NAS) shows a lot of promise. However, discovered architectures often fail to generalize in the final evaluation. Architectures with a higher validation accuracy during the search phase may perform worse in the evaluation. Aiming to alleviate this common issue, we introduce sequential greedy architecture search (SGAS), an efficient method for neural architecture search. By dividing the search procedure into sub-problems, SGAS chooses and prunes candidate operations in a greedy fashion. We apply SGAS to search architectures for Convolutional Neural Networks (CNN) and Graph Convolutional Networks (GCN). Extensive experiments show that SGAS is able to find state-of-the-art architectures for tasks such as image classification, point cloud classification and node classification in protein-protein interaction graphs with minimal computational cost."
+        ],
 	    ['', 2, 21, 25, '1n7X7GhClGrMEwP3daRjTj5UbfUQgUqS9', '1NKZNb2_scA0b2WW_4I6ZXHW1k_7F5aj-', 'Anisotropic Separable Set Abstraction for Efficient Point Cloud Representation Learning', [130, 150, 4, 1, 0],
             [0, 0, 0, 0, 0],
             [1],
