@@ -7,6 +7,11 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
+	    ['10754/664502', 2, 20, 3, '16qwEsW6Gjk2bPcMqCmJhUvGJbtEzlk9W', '1AMWkb28d-W-TBUa0xMNoe2ypzh2WKAyq', 'Self-Supervised Learning of Local Features in 3D Point Clouds', [1, 6, 0],
+            [1, 1, 0],
+            [],
+            ['https://github.com/alitabet/morton-net', 0, '', '', '', '', 'http://www.humamalwassel.com/publication/mortonnet/'], "We present a self-supervised task on point clouds, in order to learn meaningful point-wise features that encode local structure around each point. Our self-supervised network, operates directly on unstructured/unordered point clouds. Using a multi-layer RNN, our architecture predicts the next point in a point sequence created by a popular and fast Space Filling Curve, the Morton-order curve. The final RNN state (coined Morton feature) is versatile and can be used in generic 3D tasks on point clouds. Our experiments show how our self-supervised task results in features that are useful for 3D segmentation tasks, and generalize well between datasets. We show how Morton features can be used to significantly improve performance (+3% for 2 popular algorithms) in semantic segmentation of point clouds on the challenging and large-scale S3DIS dataset. We also show how our self-supervised network pretrained on S3DIS transfers well to another large-scale dataset, vKITTI, leading to 11% improvement."
+        ],
 	    ['10754/672843', 1, 21, 31, '1gvL5L_2sSJVlpFtvhKKX8-KJ1uTtRnZN', '1k1kr2i3Mb6aQIZmRI8yezBWfwmNhUNA7', 'Relation-aware Video Reading Comprehension for Temporal Language Grounding', [147, 148, 10, 149, 0],
             [1, 1, 0, 0, 0],
             [],
