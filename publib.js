@@ -7,6 +7,11 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
+	    ['10754/666178', 2, 21, 4, '1mZz2bEjXcxj-6cBoV7q6TJU0CFgSU3cZ', '1NbMpJIU10N3J45Jj-0yxVb0ndIHzfG9y', 'MVTN: Multi-View Transformation Network for 3D Shape Recognition', [92, 2, 0],
+            [0, 0, 0],
+            [],
+            ['https://github.com/ajhamdi/MVTN', 0, 'https://youtu.be/1zaHx8ztlhk', '', '', '', 'https://abdullahamdi.com/publication/mvtn-iccv/'], "Multi-view projection methods have demonstrated their ability to reach state-of-the-art performance on 3D shape recognition. Those methods learn different ways to aggregate information from multiple views. However, the camera view-points for those views tend to be heuristically set and fixed for all shapes. To circumvent the lack of dynamism of current multi-view methods, we propose to learn those view-points. In particular, we introduce the Multi-View Transformation Network (MVTN) that regresses optimal view-points for 3D shape recognition, building upon advances in differentiable rendering. As a result, MVTN can be trained end-to-end along with any multi-view network for 3D shape classification. We integrate MVTN in a novel adaptive multi-view pipeline that can render either 3D meshes or point clouds. MVTN exhibits clear performance gains in the tasks of 3D shape classification and 3D shape retrieval without the need for extra training supervision. In these tasks, MVTN achieves state-of-the-art performance on ModelNet40, ShapeNet Core55, and the most recent and realistic ScanObjectNN dataset (up to 6% improvement). Interestingly, we also show that MVTN can provide network robustness against rotation and occlusion in the 3D domain."
+        ],
 	    ['10754/666102', 1, 21, 5, '11XQ0-GagbNZXPRVu8-1o4jgDh_Ni0kYI', '1zhH_oIw1JyNHLY5BrVjTSC7ESrW3-xrb', 'VLG-Net: Video-language graph matching network for video grounding', [151, 10, 31, 152, 0],
             [1, 1, 1, 0, 0],
             [],
