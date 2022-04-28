@@ -7,10 +7,10 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
-	    ['10754/666190', 2, 21, 12, '14KyD2ftMe6Zijhc8_68o7YkcR4skfzZK', '1J5Zod8SN-IbCsH5gDz3FUU5W8RoBgdpJ', 'Rethinking Clustering for Robustness', [94, 97, 3, 1, 0, 96],
-        [1, 1, 0, 0, 0, 0],
-        [],
-        ['https://github.com/clustr-official-account/Rethinking-Clustering-for-Robustness', 0, '', '', '', '', ''], "This paper studies how encouraging semantically-aligned features during deep neural network training can increase network robustness. Recent works observed that Adversarial Training leads to robust models, whose learnt features appear to correlate with human perception. Inspired by this connection from robustness to semantics, we study the complementary connection: from semantics to robustness. To do so, we provide a robustness certificate for distance-based classification models (clustering-based classifiers). Moreover, we show that this certificate is tight, and we leverage it to propose ClusTR (Clustering Training for Robustness), a clustering-based and adversary-free training framework to learn robust models. Interestingly, ClusTR outperforms adversarially-trained networks by up to 4% under strong PGD attacks."
+	    ['10754/666190', 3, 21, 12, '14KyD2ftMe6Zijhc8_68o7YkcR4skfzZK', '1J5Zod8SN-IbCsH5gDz3FUU5W8RoBgdpJ', 'Rethinking Clustering for Robustness', [94, 97, 3, 1, 0, 96],
+	    [1, 1, 0, 0, 0, 0],
+            [],
+	    ['https://github.com/clustr-official-account/Rethinking-Clustering-for-Robustness', 0, '', '', '', '', ''], "This paper studies how encouraging semantically-aligned features during deep neural network training can increase network robustness. Recent works observed that Adversarial Training leads to robust models, whose learnt features appear to correlate with human perception. Inspired by this connection from robustness to semantics, we study the complementary connection: from semantics to robustness. To do so, we provide a robustness certificate for distance-based classification models (clustering-based classifiers). Moreover, we show that this certificate is tight, and we leverage it to propose ClusTR (Clustering Training for Robustness), a clustering-based and adversary-free training framework to learn robust models. Interestingly, ClusTR outperforms adversarially-trained networks by up to 4% under strong PGD attacks."
     	],
 	    ['10754/666178', 2, 21, 4, '1mZz2bEjXcxj-6cBoV7q6TJU0CFgSU3cZ', '1NbMpJIU10N3J45Jj-0yxVb0ndIHzfG9y', 'MVTN: Multi-View Transformation Network for 3D Shape Recognition', [92, 2, 0],
             [0, 0, 0],
