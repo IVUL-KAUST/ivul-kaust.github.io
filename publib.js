@@ -7,6 +7,11 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
+	    ['10754/669602', 2, 22, 9, '15ZWp1RW4Dw50noa0XzxPTFa0xN5KOx60', '1nvBpTdZb0uY-vcY5YV6PJEpIfMrkgcPu', 'SCTN: Sparse Convolution-Transformer Network for Scene Flow Estimation', [133, 135, 2, 0],
+            [0, 0, 0, 0],
+            [],
+            ['', 0, '', '', '', '', ''], "We propose a novel scene flow estimation approach to capture and infer 3D motions from point clouds. Estimating 3D motions for point clouds is challenging, since a point cloud is unordered and its density is significantly non-uniform. Such unstructured data poses difficulties in matching corresponding points between point clouds, leading to inaccurate flow estimation. We propose a novel architecture named Sparse Convolution-Transformer Network (SCTN) that equips the sparse convolution with the transformer. Specifically, by leveraging the sparse convolution, SCTN transfers irregular point cloud into locally consistent flow features for estimating continuous and consistent motions within an object/local object part. We further propose to explicitly learn point relations using a point transformer module, different from exiting methods. We show that the learned relation-based contextual information is rich and helpful for matching corresponding points, benefiting scene flow estimation. In addition, a novel loss function is proposed to adaptively encourage flow consistency according to feature similarity. Extensive experiments demonstrate that our proposed approach achieves a new state of the art in scene flow estimation. Our approach achieves an error of 0.038 and 0.037 (EPE3D) on FlyingThings3D and KITTI Scene Flow respectively, which significantly outperforms previous methods by large margins."
+    	],
 	    ['10754/668407', 3, 22, 9, '11dUs6FOGlMkylgdwlH6K_HiBDSzDhza3', '1QMaReBuZvmkbXNn2s-KEFGqRclW1LzZp', 'Combating Adversaries with Anti-Adversaries', [97, 94, 1, 3, 154, 0],
         	[0, 0, 0, 0, 0, 0],
             [],
@@ -14,7 +19,7 @@ const publib = {
     	],
 	    ['10754/670197', 3, 22, 9, '1Jb_D1ObFynJJzQpsLT2G1HINTyNQRKvD', '1N_O-h-98xJKItmNsptfs4NDwcItxk9FU', 'DeformRS: Certifying Input Deformations with Randomized Smoothing', [97, 3, 153, 154, 0],
             [1, 1, 0, 0, 0],
-            [],
+            [2],
             ['https://github.com/MotasemAlfarra/DeformRS', 0, '', '', '', '', ''], "Deep neural networks are vulnerable to input deformations in the form of vector fields of pixel displacements and to other parameterized geometric deformations e.g. translations, rotations, etc. Current input deformation certification methods either (i) do not scale to deep networks on large input datasets, or (ii) can only certify a specific class of deformations, e.g. only rotations. We reformulate certification in randomized smoothing setting for both general vector field and parameterized deformations and propose DeformRS-VF and DeformRS-PAR, respectively. Our new formulation scales to large networks on large input datasets. For instance, DeformRS-PAR certifies rich deformations, covering translations, rotations, scaling, affine deformations, and other visually aligned deformations such as ones parameterized by Discrete-Cosine-Transform basis. Extensive experiments on MNIST, CIFAR10, and ImageNet show competitive performance of DeformRS-PAR achieving a certified accuracy of 39% against perturbed rotations in the set [−10, 10] on ImageNet."
     	],
 	    ['10754/666190', 3, 21, 12, '14KyD2ftMe6Zijhc8_68o7YkcR4skfzZK', '1J5Zod8SN-IbCsH5gDz3FUU5W8RoBgdpJ', 'Rethinking Clustering for Robustness', [94, 97, 3, 1, 96, 0],
