@@ -7,8 +7,8 @@ const publib = {
     'link': ['Code', 'Data', 'Video', 'Poster', 'Slides', 'More', 'Website'],
     'keys': ['handle', 'theme', 'year', 'venue', 'thumbnail', 'paper', 'title', 'authors', 'coauthors', 'distinctions', 'links', 'abstract'],
     'lib': [
-	    ['10754/677988', 3, 22, 6, '1jConO8a1tvjtsxh74liIOUgJHMLgGKwq', '1i6rXW5ATYbduIW05CLB9HVKsBCG0kJ27', 'On the Robustness of Quality Measures for GANs', [94, 97, 248, 154, 32, 0],
-            [1, 0, 0, 0, 0, 0],
+	    ['10754/677988', 3, 22, 6, '1jConO8a1tvjtsxh74liIOUgJHMLgGKwq', '1i6rXW5ATYbduIW05CLB9HVKsBCG0kJ27', 'On the Robustness of Quality Measures for GANs', [97, 94, 248, 154, 32, 0],
+            [0, 0, 0, 0, 0, 0],
             [],
             ['https://github.com/MotasemAlfarra/R-FID-Robustness-of-Quality-Measures-for-GANs', 0, 'https://motasemalfarra.netlify.app/publication/on_the_robustness_of_quality_measures_for_gans/', '', '', '', ''], "This work evaluates the robustness of quality measures of generative models such as Inception Score (IS) and Fréchet Inception Distance (FID). Analogous to the vulnerability of deep models against a variety of adversarial attacks, we show that such metrics can also be manipulated by additive pixel perturbations.Our experiments indicate that one can generate a distribution of images with very high scores but low perceptual quality.Conversely, one can optimize for small imperceptible perturbations that, when added to real world images, deteriorate their scores.Furthermore, we extend our evaluation to generative models themselves, including the state of the art network StyleGANv2.We show the vulnerability of both the generative model and the FID against additive perturbations in the latent space.Finally, we show that the FID can be robustified by directly replacing the Inception model by a robustly trained Inception. We validate the effectiveness of the robustified metric through extensive experiments, which show that it is more robust against manipulation."
     	],
